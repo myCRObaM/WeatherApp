@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 class AppCoordinator: Coordinator {
-    var childCoordinators: [Coordinator]
+    var childCoordinators: [Coordinator] = []
     let window: UIWindow?
     
     init(window: UIWindow){
