@@ -8,6 +8,7 @@ pod ‘Alamofire’
 pod ‘RealmSwift’
 pod ‘RxSwift’
 pod ‘RxCocoa’
+pod 'Hue'
 
 
   target 'WheatherAppFactoryTests' do

@@ -9,10 +9,21 @@
 /* Begin PBXBuildFile section */
 		48D209350E7E2F0E50BE7F66 /* Pods_WheatherAppFactory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07CE554DA8D5DF4653E0A518 /* Pods_WheatherAppFactory.framework */; };
 		95EA4967BEF5BC2D77ED3E2A /* Pods_WheatherAppFactoryTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AFBA8B7DC768CB52903B8E2 /* Pods_WheatherAppFactoryTests.framework */; };
-		F0B3410C2327B95C0083FA5A /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B3410B2327B95C0083FA5A /* AppCoordinator.swift */; };
 		F0B3410E2327B9750083FA5A /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B3410D2327B9750083FA5A /* Coordinator.swift */; };
+		F0B341102327BE090083FA5A /* MainViewCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B3410F2327BE090083FA5A /* MainViewCoordinator.swift */; };
+		F0B341122327C0E00083FA5A /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B341112327C0E00083FA5A /* MainViewModel.swift */; };
+		F0B341182327C5A10083FA5A /* MainDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B341172327C5A10083FA5A /* MainDataClass.swift */; };
+		F0B3411B2327CC660083FA5A /* WeatherRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B3411A2327CC660083FA5A /* WeatherRepository.swift */; };
+		F0B3411E2327D2730083FA5A /* GothamRounded-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = F0B3411D2327D2700083FA5A /* GothamRounded-Light.otf */; };
+		F0B341202327D2870083FA5A /* GothamRounded-Book.otf in Resources */ = {isa = PBXBuildFile; fileRef = F0B3411F2327D2870083FA5A /* GothamRounded-Book.otf */; };
+		F0B341222328CEE90083FA5A /* AlamofireManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B341212328CEE90083FA5A /* AlamofireManager.swift */; };
+		F0B341252328D3620083FA5A /* GeneratedMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B341242328D3620083FA5A /* GeneratedMocks.swift */; };
+		F0B341272328D3890083FA5A /* MainScreenTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B341262328D3890083FA5A /* MainScreenTest.swift */; };
+		F0B3412A2328D3A70083FA5A /* RequestJSON.json in Resources */ = {isa = PBXBuildFile; fileRef = F0B341292328D3A70083FA5A /* RequestJSON.json */; };
+		F0B3412E2328E98F0083FA5A /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B3412D2328E98F0083FA5A /* GradientView.swift */; };
+		F0B341332328F4760083FA5A /* BackgroundEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B341322328F4760083FA5A /* BackgroundEnum.swift */; };
 		F0EF432C2327B6F800D2D1F7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0EF432B2327B6F800D2D1F7 /* AppDelegate.swift */; };
-		F0EF432E2327B6F800D2D1F7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0EF432D2327B6F800D2D1F7 /* ViewController.swift */; };
+		F0EF432E2327B6F800D2D1F7 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0EF432D2327B6F800D2D1F7 /* MainViewController.swift */; };
 		F0EF43332327B6F900D2D1F7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F0EF43322327B6F900D2D1F7 /* Assets.xcassets */; };
 		F0EF43362327B6F900D2D1F7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F0EF43342327B6F900D2D1F7 /* LaunchScreen.storyboard */; };
 		F0EF43412327B6F900D2D1F7 /* WheatherAppFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0EF43402327B6F900D2D1F7 /* WheatherAppFactoryTests.swift */; };
@@ -43,11 +54,22 @@
 		3D2ECB94DBE0166A32C5BCCB /* Pods-WheatherAppFactoryTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WheatherAppFactoryTests.release.xcconfig"; path = "Target Support Files/Pods-WheatherAppFactoryTests/Pods-WheatherAppFactoryTests.release.xcconfig"; sourceTree = "<group>"; };
 		50E2D66C2814E5AB66B93023 /* Pods-WheatherAppFactory.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WheatherAppFactory.debug.xcconfig"; path = "Target Support Files/Pods-WheatherAppFactory/Pods-WheatherAppFactory.debug.xcconfig"; sourceTree = "<group>"; };
 		8AFBA8B7DC768CB52903B8E2 /* Pods_WheatherAppFactoryTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WheatherAppFactoryTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		F0B3410B2327B95C0083FA5A /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		F0B3410D2327B9750083FA5A /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		F0B3410F2327BE090083FA5A /* MainViewCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewCoordinator.swift; sourceTree = "<group>"; };
+		F0B341112327C0E00083FA5A /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
+		F0B341172327C5A10083FA5A /* MainDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainDataClass.swift; sourceTree = "<group>"; };
+		F0B3411A2327CC660083FA5A /* WeatherRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherRepository.swift; sourceTree = "<group>"; };
+		F0B3411D2327D2700083FA5A /* GothamRounded-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "GothamRounded-Light.otf"; path = "../../../../../../Downloads/gotham-rounded/GothamRounded-Light.otf"; sourceTree = "<group>"; };
+		F0B3411F2327D2870083FA5A /* GothamRounded-Book.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "GothamRounded-Book.otf"; path = "../../../../../../Downloads/gotham-rounded/GothamRounded-Book.otf"; sourceTree = "<group>"; };
+		F0B341212328CEE90083FA5A /* AlamofireManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlamofireManager.swift; sourceTree = "<group>"; };
+		F0B341242328D3620083FA5A /* GeneratedMocks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneratedMocks.swift; sourceTree = "<group>"; };
+		F0B341262328D3890083FA5A /* MainScreenTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenTest.swift; sourceTree = "<group>"; };
+		F0B341292328D3A70083FA5A /* RequestJSON.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = RequestJSON.json; sourceTree = "<group>"; };
+		F0B3412D2328E98F0083FA5A /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
+		F0B341322328F4760083FA5A /* BackgroundEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundEnum.swift; sourceTree = "<group>"; };
 		F0EF43282327B6F800D2D1F7 /* WheatherAppFactory.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WheatherAppFactory.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0EF432B2327B6F800D2D1F7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		F0EF432D2327B6F800D2D1F7 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		F0EF432D2327B6F800D2D1F7 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		F0EF43322327B6F900D2D1F7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F0EF43352327B6F900D2D1F7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F0EF43372327B6F900D2D1F7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -106,6 +128,67 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		F0B341132327C5610083FA5A /* Delegates */ = {
+			isa = PBXGroup;
+			children = (
+				F0EF432B2327B6F800D2D1F7 /* AppDelegate.swift */,
+			);
+			path = Delegates;
+			sourceTree = "<group>";
+		};
+		F0B341142327C56E0083FA5A /* MainView */ = {
+			isa = PBXGroup;
+			children = (
+				F0EF432D2327B6F800D2D1F7 /* MainViewController.swift */,
+				F0B3410F2327BE090083FA5A /* MainViewCoordinator.swift */,
+				F0B341112327C0E00083FA5A /* MainViewModel.swift */,
+				F0B3412D2328E98F0083FA5A /* GradientView.swift */,
+			);
+			path = MainView;
+			sourceTree = "<group>";
+		};
+		F0B341152327C5830083FA5A /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				F0B3410D2327B9750083FA5A /* Coordinator.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		F0B341162327C58E0083FA5A /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				F0B341172327C5A10083FA5A /* MainDataClass.swift */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		F0B341192327CC480083FA5A /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				F0B3411A2327CC660083FA5A /* WeatherRepository.swift */,
+				F0B341212328CEE90083FA5A /* AlamofireManager.swift */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
+		F0B3411C2327D2270083FA5A /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				F0B3411D2327D2700083FA5A /* GothamRounded-Light.otf */,
+				F0B3411F2327D2870083FA5A /* GothamRounded-Book.otf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		F0B3412F2328F40C0083FA5A /* Enum */ = {
+			isa = PBXGroup;
+			children = (
+				F0B341322328F4760083FA5A /* BackgroundEnum.swift */,
+			);
+			path = Enum;
+			sourceTree = "<group>";
+		};
 		F0EF431F2327B6F800D2D1F7 = {
 			isa = PBXGroup;
 			children = (
@@ -131,10 +214,13 @@
 		F0EF432A2327B6F800D2D1F7 /* WheatherAppFactory */ = {
 			isa = PBXGroup;
 			children = (
-				F0EF432B2327B6F800D2D1F7 /* AppDelegate.swift */,
-				F0EF432D2327B6F800D2D1F7 /* ViewController.swift */,
-				F0B3410D2327B9750083FA5A /* Coordinator.swift */,
-				F0B3410B2327B95C0083FA5A /* AppCoordinator.swift */,
+				F0B3411C2327D2270083FA5A /* Fonts */,
+				F0B3412F2328F40C0083FA5A /* Enum */,
+				F0B341162327C58E0083FA5A /* Classes */,
+				F0B341132327C5610083FA5A /* Delegates */,
+				F0B341192327CC480083FA5A /* Manager */,
+				F0B341142327C56E0083FA5A /* MainView */,
+				F0B341152327C5830083FA5A /* Coordinator */,
 				F0EF43322327B6F900D2D1F7 /* Assets.xcassets */,
 				F0EF43342327B6F900D2D1F7 /* LaunchScreen.storyboard */,
 				F0EF43372327B6F900D2D1F7 /* Info.plist */,
@@ -146,7 +232,10 @@
 			isa = PBXGroup;
 			children = (
 				F0EF43402327B6F900D2D1F7 /* WheatherAppFactoryTests.swift */,
+				F0B341242328D3620083FA5A /* GeneratedMocks.swift */,
+				F0B341262328D3890083FA5A /* MainScreenTest.swift */,
 				F0EF43422327B6F900D2D1F7 /* Info.plist */,
+				F0B341292328D3A70083FA5A /* RequestJSON.json */,
 			);
 			path = WheatherAppFactoryTests;
 			sourceTree = "<group>";
@@ -187,6 +276,7 @@
 			buildConfigurationList = F0EF43532327B6F900D2D1F7 /* Build configuration list for PBXNativeTarget "WheatherAppFactoryTests" */;
 			buildPhases = (
 				B61DFFFBB46CDDE2FD6892DC /* [CP] Check Pods Manifest.lock */,
+				F0B341232328D2EE0083FA5A /* Run Script */,
 				F0EF43382327B6F900D2D1F7 /* Sources */,
 				F0EF43392327B6F900D2D1F7 /* Frameworks */,
 				F0EF433A2327B6F900D2D1F7 /* Resources */,
@@ -268,7 +358,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F0B3411E2327D2730083FA5A /* GothamRounded-Light.otf in Resources */,
 				F0EF43362327B6F900D2D1F7 /* LaunchScreen.storyboard in Resources */,
+				F0B341202327D2870083FA5A /* GothamRounded-Book.otf in Resources */,
 				F0EF43332327B6F900D2D1F7 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -277,6 +369,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F0B3412A2328D3A70083FA5A /* RequestJSON.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -368,6 +461,25 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		F0B341232328D2EE0083FA5A /* Run Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PROJECT_DIR}/${PROJECT_NAME}/Manager/WeatherRepository.swift",
+			);
+			name = "Run Script";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Define output file. Change \"${PROJECT_DIR}/${PROJECT_NAME}Tests\" to your test's root source folder, if it's not the default name.\nOUTPUT_FILE=\"${PROJECT_DIR}/${PROJECT_NAME}Tests/GeneratedMocks.swift\"\necho \"Generated Mocks File = ${OUTPUT_FILE}\"\n\n# Define input directory. Change \"${PROJECT_DIR}/${PROJECT_NAME}\" to your project's root source folder, if it's not the default name.\nINPUT_DIR=\"${PROJECT_DIR}/${PROJECT_NAME}\"\necho \"Mocks Input Directory = ${INPUT_DIR}\"\n\n# Generate mock files, include as many input files as you'd like to create mocks for.\n\"${PODS_ROOT}/Cuckoo/run\" generate --testable \"${PROJECT_NAME}\" \\\n--output \"${OUTPUT_FILE}\" \n# ... and so forth, the last line should never end with a backslash\n\n# After running once, locate `GeneratedMocks.swift` and drag it into your Xcode test target group.\n";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -375,10 +487,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F0B341332328F4760083FA5A /* BackgroundEnum.swift in Sources */,
+				F0B3411B2327CC660083FA5A /* WeatherRepository.swift in Sources */,
+				F0B341182327C5A10083FA5A /* MainDataClass.swift in Sources */,
+				F0B341122327C0E00083FA5A /* MainViewModel.swift in Sources */,
 				F0B3410E2327B9750083FA5A /* Coordinator.swift in Sources */,
-				F0B3410C2327B95C0083FA5A /* AppCoordinator.swift in Sources */,
-				F0EF432E2327B6F800D2D1F7 /* ViewController.swift in Sources */,
+				F0B341222328CEE90083FA5A /* AlamofireManager.swift in Sources */,
+				F0B341102327BE090083FA5A /* MainViewCoordinator.swift in Sources */,
+				F0EF432E2327B6F800D2D1F7 /* MainViewController.swift in Sources */,
 				F0EF432C2327B6F800D2D1F7 /* AppDelegate.swift in Sources */,
+				F0B3412E2328E98F0083FA5A /* GradientView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -387,6 +505,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				F0EF43412327B6F900D2D1F7 /* WheatherAppFactoryTests.swift in Sources */,
+				F0B341272328D3890083FA5A /* MainScreenTest.swift in Sources */,
+				F0B341252328D3620083FA5A /* GeneratedMocks.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
