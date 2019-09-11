@@ -1,6 +1,7 @@
 PODS:
   - Alamofire (4.8.2)
   - Cuckoo (1.1.1)
+  - Hue (5.0.0)
   - Kingfisher (5.7.1)
   - Nimble (8.0.2)
   - Quick (2.1.0)
@@ -21,6 +22,7 @@ PODS:
 DEPENDENCIES:
   - Alamofire
   - Cuckoo
+  - Hue
   - Kingfisher
   - Nimble
   - Quick
@@ -33,6 +35,7 @@ SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
     - Cuckoo
+    - Hue
     - Kingfisher
     - Nimble
     - Quick
@@ -46,6 +49,7 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   Alamofire: ae5c501addb7afdbb13687d7f2f722c78734c2d3
   Cuckoo: 6193c50e46403cc9417aa98752671a2a5ae6f3a6
+  Hue: c129cb67be7d093a82bbbc30ce8a96757bf6f37a
   Kingfisher: 176d377ad339113c99ad4980cbae687f807e20fe
   Nimble: 622629381bda1dd5678162f21f1368cec7cbba60
   Quick: 4be43f6634acfa727dd106bdf3929ce125ffa79d
@@ -56,6 +60,6 @@ SPEC CHECKSUMS:
   RxSwift: 8b0671caa829a763bbce7271095859121cbd895f
   RxTest: 4349afe98f564e0a9bc19063368904622d17d49a
 
-PODFILE CHECKSUM: 092519112ad5b0d7ddc58c3d5ed6563b44009f38
+PODFILE CHECKSUM: de07b9061cefeaffd0eae06b996ef377128261be
 
 COCOAPODS: 1.7.4
