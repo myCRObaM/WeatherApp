@@ -33,4 +33,24 @@ class AlamofireManager {
         
         }
     }
+    
+    func requestLocation(url: String) -> Observable<[LocationDataClass]> {
+        let requestUrl = URL(string: url)!
+        
+        return Observable.create{   observable -> Disposable in
+            
+            Alamofire.request(requestUrl)
+                .responseJSON   { response in
+                    do {
+                        guard let data = response.data else {return}
+                        let article = try JSONDecoder().decode([LocationDataClass].self, from: data)
+                        observable.onNext(article)
+                    }   catch let jsonErr {
+                        observable.onError(jsonErr)
+                    }
+            }
+            return Disposables.create()
+            
+        }
+    }
 }

@@ -10,13 +10,19 @@ import UIKit
 import RxSwift
 import Hue
 
-class MainViewController: UIViewController {
+protocol hideKeyboard {
+    func hideViewController()
+}
+
+
+class MainViewController: UIViewController, UISearchBarDelegate{
 
     let viewModel: MainViewModel!
     let disposeBag = DisposeBag()
     var gradientView: GradientView!
     var tempUnits: String = "°C"
     var speedUnit: String = "km/h"
+    var searchBarCenterY: NSLayoutConstraint!
     
     
     let gradient: CAGradientLayer = {
@@ -262,15 +268,6 @@ class MainViewController: UIViewController {
         return imageView
     }()
     
-    let searchBarStackView: UIStackView = {
-        let stack = UIStackView()
-        stack.axis = .horizontal
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        stack.spacing = 5
-        stack.alignment = .center
-        return stack
-    }()
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -295,8 +292,9 @@ class MainViewController: UIViewController {
     func setupView(){
         gradientView = GradientView()
         gradientView.translatesAutoresizingMaskIntoConstraints = false
+        settingsImage.translatesAutoresizingMaskIntoConstraints = false
+        searchBar.translatesAutoresizingMaskIntoConstraints = false
         gradientView.setupUI(gradient)
-        
         view.addSubview(mainBodyImage)
         view.insertSubview(gradientView, belowSubview: mainBodyImage)
         view.insertSubview(headerImage, aboveSubview: gradientView)
@@ -305,7 +303,8 @@ class MainViewController: UIViewController {
         view.addSubview(highAndLowTempStackView)
         view.addSubview(moreInfoStackView)
         view.addSubview(searchBar)
-        view.addSubview(searchBarStackView)
+        view.addSubview(settingsImage)
+        //view.addSubview(searchBarStackView)
         
         topTempStackView.addArrangedSubview(currentTemperatureLabel)
         topTempStackView.addArrangedSubview(currentSummaryLabel)
@@ -341,11 +340,12 @@ class MainViewController: UIViewController {
         moreInfoStackView.addArrangedSubview(pressureStackView)
         
         
-        searchBarStackView.addArrangedSubview(settingsImage)
-        searchBarStackView.addArrangedSubview(searchBar)
+//        searchBarStackView.addArrangedSubview(settingsImage)
+//        searchBarStackView.addArrangedSubview(searchBar)
         
         setupConstraints()
         
+        settingsImage.addTarget(self, action: #selector(settingPressed), for: .touchUpInside)
     }
     
     func setupConstraints() {
@@ -389,13 +389,16 @@ class MainViewController: UIViewController {
             moreInfoStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             moreInfoStackView.topAnchor.constraint(equalTo: highAndLowTempStackView.bottomAnchor, constant: view.bounds.height/13),
             ])
+        
+        
+        
         NSLayoutConstraint.activate([
-            searchBarStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            searchBarStackView.topAnchor.constraint(equalTo: moreInfoStackView.bottomAnchor, constant: view.bounds.height/13),
-            searchBarStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
-            searchBarStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10)
+            settingsImage.topAnchor.constraint(equalTo: moreInfoStackView.bottomAnchor, constant: view.bounds.height/11),
+            //settingsImage.centerYAnchor.constraint(equalTo: searchBar.centerYAnchor),
+            settingsImage.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
             ])
-    }
+        setupSearchBarConstraints()
+}
     
     func setupViewModel(){
         viewModel.getData(subject: viewModel.getDataSubject).disposed(by: disposeBag)
@@ -506,5 +509,39 @@ class MainViewController: UIViewController {
                 self.highTemperatureLabel.text = String((day.temperatureMax * 10).rounded() / 10) + tempUnits
             }
         }
+    }
+    func setupSearchBarConstraints(){
+        searchBar.delegate = self
+        searchBarCenterY = NSLayoutConstraint(item: searchBar, attribute: .centerY, relatedBy: .equal, toItem: settingsImage, attribute: .centerY, multiplier: 1, constant: 0)
+        NSLayoutConstraint.activate([
+            searchBar.heightAnchor.constraint(equalToConstant: 70),
+            searchBar.leadingAnchor.constraint(equalTo: settingsImage.trailingAnchor, constant: 10),
+            searchBar.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10)
+            ])
+        view.addConstraint(searchBarCenterY)
+        
+    }
+    @objc func settingPressed(){
+       
+    }
+    func searchBarPressed(){
+        let search = searchBar
+        let vc = SearchViewController(model: SearchViewModel(), searchBar: search)
+        vc.modalPresentationStyle = .overFullScreen
+        vc.cancelButtonPressed = self
+        self.present(vc, animated: false) {
+        }
+    }
+    
+    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
+        searchBarPressed()
+        return false
+    }
+    
+}
+extension MainViewController: hideKeyboard {
+    func hideViewController() {
+        view.addSubview(searchBar)
+        setupSearchBarConstraints()
     }
 }

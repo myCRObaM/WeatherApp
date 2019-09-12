@@ -22,6 +22,14 @@
 		F0B3412A2328D3A70083FA5A /* RequestJSON.json in Resources */ = {isa = PBXBuildFile; fileRef = F0B341292328D3A70083FA5A /* RequestJSON.json */; };
 		F0B3412E2328E98F0083FA5A /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B3412D2328E98F0083FA5A /* GradientView.swift */; };
 		F0B341332328F4760083FA5A /* BackgroundEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B341322328F4760083FA5A /* BackgroundEnum.swift */; };
+		F0B34136232A0EBE0083FA5A /* SettingsScreenModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B34135232A0EBE0083FA5A /* SettingsScreenModel.swift */; };
+		F0B34138232A0F0A0083FA5A /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B34137232A0F0A0083FA5A /* SettingViewController.swift */; };
+		F0B3413A232A0F190083FA5A /* SettingViewCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B34139232A0F190083FA5A /* SettingViewCoordinator.swift */; };
+		F0B3413D232A0F310083FA5A /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B3413C232A0F310083FA5A /* SearchViewModel.swift */; };
+		F0B3413F232A0F460083FA5A /* SearchViewCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B3413E232A0F460083FA5A /* SearchViewCoordinator.swift */; };
+		F0B34141232A0F500083FA5A /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B34140232A0F500083FA5A /* SearchViewController.swift */; };
+		F0B34143232A46A30083FA5A /* LocationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B34142232A46A30083FA5A /* LocationRepository.swift */; };
+		F0B34145232A474F0083FA5A /* LocationDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B34144232A474F0083FA5A /* LocationDataClass.swift */; };
 		F0EF432C2327B6F800D2D1F7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0EF432B2327B6F800D2D1F7 /* AppDelegate.swift */; };
 		F0EF432E2327B6F800D2D1F7 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0EF432D2327B6F800D2D1F7 /* MainViewController.swift */; };
 		F0EF43332327B6F900D2D1F7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F0EF43322327B6F900D2D1F7 /* Assets.xcassets */; };
@@ -67,6 +75,14 @@
 		F0B341292328D3A70083FA5A /* RequestJSON.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = RequestJSON.json; sourceTree = "<group>"; };
 		F0B3412D2328E98F0083FA5A /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		F0B341322328F4760083FA5A /* BackgroundEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundEnum.swift; sourceTree = "<group>"; };
+		F0B34135232A0EBE0083FA5A /* SettingsScreenModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsScreenModel.swift; sourceTree = "<group>"; };
+		F0B34137232A0F0A0083FA5A /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
+		F0B34139232A0F190083FA5A /* SettingViewCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewCoordinator.swift; sourceTree = "<group>"; };
+		F0B3413C232A0F310083FA5A /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
+		F0B3413E232A0F460083FA5A /* SearchViewCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewCoordinator.swift; sourceTree = "<group>"; };
+		F0B34140232A0F500083FA5A /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		F0B34142232A46A30083FA5A /* LocationRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationRepository.swift; sourceTree = "<group>"; };
+		F0B34144232A474F0083FA5A /* LocationDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationDataClass.swift; sourceTree = "<group>"; };
 		F0EF43282327B6F800D2D1F7 /* WheatherAppFactory.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WheatherAppFactory.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0EF432B2327B6F800D2D1F7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F0EF432D2327B6F800D2D1F7 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -159,6 +175,7 @@
 			isa = PBXGroup;
 			children = (
 				F0B341172327C5A10083FA5A /* MainDataClass.swift */,
+				F0B34144232A474F0083FA5A /* LocationDataClass.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -168,6 +185,7 @@
 			children = (
 				F0B3411A2327CC660083FA5A /* WeatherRepository.swift */,
 				F0B341212328CEE90083FA5A /* AlamofireManager.swift */,
+				F0B34142232A46A30083FA5A /* LocationRepository.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -187,6 +205,26 @@
 				F0B341322328F4760083FA5A /* BackgroundEnum.swift */,
 			);
 			path = Enum;
+			sourceTree = "<group>";
+		};
+		F0B34134232A0EA20083FA5A /* SettingScreen */ = {
+			isa = PBXGroup;
+			children = (
+				F0B34135232A0EBE0083FA5A /* SettingsScreenModel.swift */,
+				F0B34137232A0F0A0083FA5A /* SettingViewController.swift */,
+				F0B34139232A0F190083FA5A /* SettingViewCoordinator.swift */,
+			);
+			path = SettingScreen;
+			sourceTree = "<group>";
+		};
+		F0B3413B232A0F1E0083FA5A /* SearchScreen */ = {
+			isa = PBXGroup;
+			children = (
+				F0B3413C232A0F310083FA5A /* SearchViewModel.swift */,
+				F0B3413E232A0F460083FA5A /* SearchViewCoordinator.swift */,
+				F0B34140232A0F500083FA5A /* SearchViewController.swift */,
+			);
+			path = SearchScreen;
 			sourceTree = "<group>";
 		};
 		F0EF431F2327B6F800D2D1F7 = {
@@ -219,6 +257,8 @@
 				F0B341162327C58E0083FA5A /* Classes */,
 				F0B341132327C5610083FA5A /* Delegates */,
 				F0B341192327CC480083FA5A /* Manager */,
+				F0B3413B232A0F1E0083FA5A /* SearchScreen */,
+				F0B34134232A0EA20083FA5A /* SettingScreen */,
 				F0B341142327C56E0083FA5A /* MainView */,
 				F0B341152327C5830083FA5A /* Coordinator */,
 				F0EF43322327B6F900D2D1F7 /* Assets.xcassets */,
@@ -489,14 +529,22 @@
 			files = (
 				F0B341332328F4760083FA5A /* BackgroundEnum.swift in Sources */,
 				F0B3411B2327CC660083FA5A /* WeatherRepository.swift in Sources */,
+				F0B3413A232A0F190083FA5A /* SettingViewCoordinator.swift in Sources */,
+				F0B3413F232A0F460083FA5A /* SearchViewCoordinator.swift in Sources */,
 				F0B341182327C5A10083FA5A /* MainDataClass.swift in Sources */,
+				F0B34143232A46A30083FA5A /* LocationRepository.swift in Sources */,
 				F0B341122327C0E00083FA5A /* MainViewModel.swift in Sources */,
 				F0B3410E2327B9750083FA5A /* Coordinator.swift in Sources */,
 				F0B341222328CEE90083FA5A /* AlamofireManager.swift in Sources */,
+				F0B34136232A0EBE0083FA5A /* SettingsScreenModel.swift in Sources */,
+				F0B3413D232A0F310083FA5A /* SearchViewModel.swift in Sources */,
+				F0B34141232A0F500083FA5A /* SearchViewController.swift in Sources */,
 				F0B341102327BE090083FA5A /* MainViewCoordinator.swift in Sources */,
 				F0EF432E2327B6F800D2D1F7 /* MainViewController.swift in Sources */,
 				F0EF432C2327B6F800D2D1F7 /* AppDelegate.swift in Sources */,
+				F0B34145232A474F0083FA5A /* LocationDataClass.swift in Sources */,
 				F0B3412E2328E98F0083FA5A /* GradientView.swift in Sources */,
+				F0B34138232A0F0A0083FA5A /* SettingViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
