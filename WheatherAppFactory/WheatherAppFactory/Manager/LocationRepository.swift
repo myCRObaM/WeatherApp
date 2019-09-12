@@ -13,7 +13,7 @@ class LocationRepository {
     let url = "http://api.geonames.org/postalCodeLookupJSON?placename="
     let username = "&username=myCRObaM"
     
-    func alamofireRequest(_ location: String) -> Observable<[LocationDataClass]> {
+    func alamofireRequest(_ location: String) -> Observable<LocationDataClass> {
         let alamofireManager = AlamofireManager()
         let currentURL = url + location + username
         return alamofireManager.requestLocation(url: currentURL)

@@ -11,6 +11,8 @@ import UIKit
 import RxSwift
 
 
+
+
 class MainViewCoordinator: Coordinator {
     var childCoordinators: [Coordinator] = []
     var window: UIWindow!
@@ -22,7 +24,16 @@ class MainViewCoordinator: Coordinator {
     func start() {
         let mainViewModel = MainViewModel(scheduler: ConcurrentDispatchQueueScheduler(qos: .background), repository: WeatherRepository())
         let mainViewController = MainViewController(viewModel: mainViewModel)
+        mainViewController.openSearchScreenDelegate = self
         window?.rootViewController = mainViewController
         window?.makeKeyAndVisible()
     }
+}
+extension MainViewCoordinator: SearchScreenDelegate{
+    func openSearchScreen(searchBar: UISearchBar, rootController: MainViewController) {
+        let searchCoordinator = SearchViewCoordinator(rootController: rootController, searchBar: searchBar)
+        searchCoordinator.start()
+    }
+    
+    
 }

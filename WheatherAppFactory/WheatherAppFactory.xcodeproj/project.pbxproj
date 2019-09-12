@@ -30,6 +30,10 @@
 		F0B34141232A0F500083FA5A /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B34140232A0F500083FA5A /* SearchViewController.swift */; };
 		F0B34143232A46A30083FA5A /* LocationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B34142232A46A30083FA5A /* LocationRepository.swift */; };
 		F0B34145232A474F0083FA5A /* LocationDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B34144232A474F0083FA5A /* LocationDataClass.swift */; };
+		F0B34147232A594C0083FA5A /* LocationsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B34146232A594C0083FA5A /* LocationsTableViewCell.swift */; };
+		F0B34149232A60670083FA5A /* ChangeLocationBasedOnSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B34148232A60670083FA5A /* ChangeLocationBasedOnSelection.swift */; };
+		F0B3414B232A6A760083FA5A /* SearchViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B3414A232A6A760083FA5A /* SearchViewModelTest.swift */; };
+		F0B3414D232A6AD10083FA5A /* LocationJSON.json in Resources */ = {isa = PBXBuildFile; fileRef = F0B3414C232A6AD10083FA5A /* LocationJSON.json */; };
 		F0EF432C2327B6F800D2D1F7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0EF432B2327B6F800D2D1F7 /* AppDelegate.swift */; };
 		F0EF432E2327B6F800D2D1F7 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0EF432D2327B6F800D2D1F7 /* MainViewController.swift */; };
 		F0EF43332327B6F900D2D1F7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F0EF43322327B6F900D2D1F7 /* Assets.xcassets */; };
@@ -83,6 +87,10 @@
 		F0B34140232A0F500083FA5A /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		F0B34142232A46A30083FA5A /* LocationRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationRepository.swift; sourceTree = "<group>"; };
 		F0B34144232A474F0083FA5A /* LocationDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationDataClass.swift; sourceTree = "<group>"; };
+		F0B34146232A594C0083FA5A /* LocationsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationsTableViewCell.swift; sourceTree = "<group>"; };
+		F0B34148232A60670083FA5A /* ChangeLocationBasedOnSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeLocationBasedOnSelection.swift; sourceTree = "<group>"; };
+		F0B3414A232A6A760083FA5A /* SearchViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModelTest.swift; sourceTree = "<group>"; };
+		F0B3414C232A6AD10083FA5A /* LocationJSON.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = LocationJSON.json; sourceTree = "<group>"; };
 		F0EF43282327B6F800D2D1F7 /* WheatherAppFactory.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WheatherAppFactory.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0EF432B2327B6F800D2D1F7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F0EF432D2327B6F800D2D1F7 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -148,6 +156,7 @@
 			isa = PBXGroup;
 			children = (
 				F0EF432B2327B6F800D2D1F7 /* AppDelegate.swift */,
+				F0B34148232A60670083FA5A /* ChangeLocationBasedOnSelection.swift */,
 			);
 			path = Delegates;
 			sourceTree = "<group>";
@@ -227,6 +236,14 @@
 			path = SearchScreen;
 			sourceTree = "<group>";
 		};
+		F0B3414E232A70070083FA5A /* TableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				F0B34146232A594C0083FA5A /* LocationsTableViewCell.swift */,
+			);
+			path = TableViewCell;
+			sourceTree = "<group>";
+		};
 		F0EF431F2327B6F800D2D1F7 = {
 			isa = PBXGroup;
 			children = (
@@ -257,6 +274,7 @@
 				F0B341162327C58E0083FA5A /* Classes */,
 				F0B341132327C5610083FA5A /* Delegates */,
 				F0B341192327CC480083FA5A /* Manager */,
+				F0B3414E232A70070083FA5A /* TableViewCell */,
 				F0B3413B232A0F1E0083FA5A /* SearchScreen */,
 				F0B34134232A0EA20083FA5A /* SettingScreen */,
 				F0B341142327C56E0083FA5A /* MainView */,
@@ -274,8 +292,10 @@
 				F0EF43402327B6F900D2D1F7 /* WheatherAppFactoryTests.swift */,
 				F0B341242328D3620083FA5A /* GeneratedMocks.swift */,
 				F0B341262328D3890083FA5A /* MainScreenTest.swift */,
+				F0B3414A232A6A760083FA5A /* SearchViewModelTest.swift */,
 				F0EF43422327B6F900D2D1F7 /* Info.plist */,
 				F0B341292328D3A70083FA5A /* RequestJSON.json */,
+				F0B3414C232A6AD10083FA5A /* LocationJSON.json */,
 			);
 			path = WheatherAppFactoryTests;
 			sourceTree = "<group>";
@@ -409,6 +429,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F0B3414D232A6AD10083FA5A /* LocationJSON.json in Resources */,
 				F0B3412A2328D3A70083FA5A /* RequestJSON.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -510,6 +531,7 @@
 			);
 			inputPaths = (
 				"${PROJECT_DIR}/${PROJECT_NAME}/Manager/WeatherRepository.swift",
+				"${PROJECT_DIR}/${PROJECT_NAME}/Manager/LocationRepository.swift",
 			);
 			name = "Run Script";
 			outputFileListPaths = (
@@ -535,9 +557,11 @@
 				F0B34143232A46A30083FA5A /* LocationRepository.swift in Sources */,
 				F0B341122327C0E00083FA5A /* MainViewModel.swift in Sources */,
 				F0B3410E2327B9750083FA5A /* Coordinator.swift in Sources */,
+				F0B34149232A60670083FA5A /* ChangeLocationBasedOnSelection.swift in Sources */,
 				F0B341222328CEE90083FA5A /* AlamofireManager.swift in Sources */,
 				F0B34136232A0EBE0083FA5A /* SettingsScreenModel.swift in Sources */,
 				F0B3413D232A0F310083FA5A /* SearchViewModel.swift in Sources */,
+				F0B34147232A594C0083FA5A /* LocationsTableViewCell.swift in Sources */,
 				F0B34141232A0F500083FA5A /* SearchViewController.swift in Sources */,
 				F0B341102327BE090083FA5A /* MainViewCoordinator.swift in Sources */,
 				F0EF432E2327B6F800D2D1F7 /* MainViewController.swift in Sources */,
@@ -554,6 +578,7 @@
 			files = (
 				F0EF43412327B6F900D2D1F7 /* WheatherAppFactoryTests.swift in Sources */,
 				F0B341272328D3890083FA5A /* MainScreenTest.swift in Sources */,
+				F0B3414B232A6A760083FA5A /* SearchViewModelTest.swift in Sources */,
 				F0B341252328D3620083FA5A /* GeneratedMocks.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

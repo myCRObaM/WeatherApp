@@ -8,24 +8,48 @@
 
 import Foundation
 import UIKit
+import RxSwift
+
 class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource  {
-    
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
-    }
-    
-    
     
     let viewModel: SearchViewModel!
     let searchBar: UISearchBar!
     var cancelButtonPressed: hideKeyboard!
     var keyboardHeight: CGFloat!
     var bottomConstraint: NSLayoutConstraint?
+    let disposeBag = DisposeBag()
+    var selectedLocationButton: ChangeLocationBasedOnSelection!
+    
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if viewModel.locationData.count != 0 {
+            return viewModel.locationData[0].postalcodes.count
+        }
+        else {
+            return 0
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let dataForCellSetup = viewModel.locationData[0].postalcodes[indexPath.row]
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "cellID", for: indexPath) as? LocationTableViewCell else {
+            fatalError("nije settano")
+            
+        }
+        cell.setupCell(data: dataForCellSetup)
+        cell.backgroundColor = .clear
+        cell.selectionStyle = .none
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let data = viewModel.locationData[0].postalcodes[indexPath.row]
+        searchBar.endEditing(true)
+        self.dismiss(animated: false, completion: nil)
+        cancelButtonPressed.hideViewController()
+        selectedLocationButton.didSelectLocation(long: data.lat, lat: data.lng, location: data.placeName)
+    }
     
     let searchView: UIView = {
         let view = UIView()
@@ -70,16 +94,23 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
     override func viewDidLoad() {
         super.viewDidLoad()
         searchBar.delegate = self
-       
+        tableView.delegate = self
+        tableView.dataSource = self
+        
+        prepareForViewModel()
+        bindTextFieldWithRx()
         
         setupView()
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         
-      NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         self.searchBar.becomeFirstResponder()
     }
     func setupView(){
+        tableView.register(LocationTableViewCell.self, forCellReuseIdentifier: "cellID")
         
         let tap = UILongPressGestureRecognizer(target: self, action: #selector(screenPressed))
         tap.minimumPressDuration = 0
@@ -104,10 +135,9 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
             blurryBackground.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             blurryBackground.trailingAnchor.constraint(equalTo: view.trailingAnchor)
             ])
-        bottomConstraint = NSLayoutConstraint(item: searchBar!, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: -20)
+        bottomConstraint = NSLayoutConstraint(item: searchBar!, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: -60)
         
         NSLayoutConstraint.activate([
-            searchBar.heightAnchor.constraint(equalToConstant: 70),
             searchBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             searchBar.trailingAnchor.constraint(equalTo: view.trailingAnchor)
             ])
@@ -138,12 +168,39 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
             keyboardHeight = keyboardFrame.cgRectValue.height
             
             let isKeyboardShown = notification.name == UIResponder.keyboardWillShowNotification
+            self.bottomConstraint?.constant = isKeyboardShown ? -self.keyboardHeight : -60
             
             UIView.animate(withDuration: 1) {
-                self.bottomConstraint?.constant = isKeyboardShown ? -self.keyboardHeight : -20
                 self.view.layoutIfNeeded()
             }
         }
+    }
+    func prepareForViewModel(){
+        viewModel.getData(subject: viewModel.getLocationSubject).disposed(by: disposeBag)
+        reloadTableViewData(subject: viewModel.dataDoneSubject).disposed(by: disposeBag)
+    }
+    
+    func bindTextFieldWithRx(){
+        @discardableResult let _ = searchBar.rx.text.orEmpty
+            .distinctUntilChanged()
+            .enumerated()
+            .skipWhile({ (index, value) -> Bool in
+                return index == 0
+            })
+            .map({ (index, value) -> String in
+                return value
+            })
+            .debounce(.milliseconds(300), scheduler: ConcurrentDispatchQueueScheduler(qos: .background))
+            .bind(to: viewModel.getLocationSubject)
+    }
+    
+    func reloadTableViewData(subject: PublishSubject<Bool>) -> Disposable{
+        return subject
+            .observeOn(MainScheduler.instance)
+            .subscribeOn(viewModel.scheduler)
+            .subscribe(onNext: {[unowned self]  article in
+                self.tableView.reloadData()
+            })
     }
     
 }

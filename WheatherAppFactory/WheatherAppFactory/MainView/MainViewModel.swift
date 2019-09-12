@@ -16,13 +16,14 @@ class MainViewModel {
     let dataIsDoneLoading = PublishSubject<Bool>()
     let scheduler: SchedulerType
     let repository: WeatherRepository
+    var locationToUse: String = "45.83194,17.38389"
     var unitMode: String = "si"
     
     func getData(subject: ReplaySubject<String>) -> Disposable{
         return subject
             .flatMap{(bool) -> Observable<MainDataClass> in
-                
-                return self.repository.alamofireRequest(bool)
+                self.dataIsDoneLoading.onNext(false)
+                return self.repository.alamofireRequest(self.unitMode, bool)
         }
             .observeOn(MainScheduler.instance)
             .subscribeOn(scheduler)
