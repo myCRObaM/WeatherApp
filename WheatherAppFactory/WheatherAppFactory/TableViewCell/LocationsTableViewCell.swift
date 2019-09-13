@@ -14,7 +14,7 @@ class LocationTableViewCell: UITableViewCell {
     
     let locationLabel: UILabel = {
         let textView = UILabel()
-        let gothamLightFont = UIFont(name: "GothamRounded-Light", size: 20)
+        let gothamLightFont = UIFont(name: "GothamRounded-Book", size: 20)
         textView.font = gothamLightFont
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.numberOfLines = 1
@@ -24,13 +24,14 @@ class LocationTableViewCell: UITableViewCell {
     let textImageView: UILabel = {
         let image = UILabel()
         image.translatesAutoresizingMaskIntoConstraints = false
-        let gothamLightFont = UIFont(name: "GothamRounded-Light", size: 20)
+        let gothamLightFont = UIFont(name: "GothamRounded-Book", size: 20)
         image.font = gothamLightFont
         image.textAlignment = .center
         image.textColor = .white
         image.backgroundColor = UIColor(hex: "#B3D9EF")
         return image
     }()
+    
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

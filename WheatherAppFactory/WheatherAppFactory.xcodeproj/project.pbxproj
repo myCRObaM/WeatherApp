@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		48D209350E7E2F0E50BE7F66 /* Pods_WheatherAppFactory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07CE554DA8D5DF4653E0A518 /* Pods_WheatherAppFactory.framework */; };
 		95EA4967BEF5BC2D77ED3E2A /* Pods_WheatherAppFactoryTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AFBA8B7DC768CB52903B8E2 /* Pods_WheatherAppFactoryTests.framework */; };
+		F00821F7232B5E72006CEA6F /* DataDoneEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00821F6232B5E72006CEA6F /* DataDoneEnum.swift */; };
+		F00821F9232B832C006CEA6F /* SettingsScreenClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00821F8232B832C006CEA6F /* SettingsScreenClass.swift */; };
+		F00821FB232B8B61006CEA6F /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00821FA232B8B61006CEA6F /* RealmManager.swift */; };
+		F00821FD232BAC57006CEA6F /* DoneButtonIsPressedDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00821FC232BAC57006CEA6F /* DoneButtonIsPressedDelegate.swift */; };
 		F0B3410E2327B9750083FA5A /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B3410D2327B9750083FA5A /* Coordinator.swift */; };
 		F0B341102327BE090083FA5A /* MainViewCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B3410F2327BE090083FA5A /* MainViewCoordinator.swift */; };
 		F0B341122327C0E00083FA5A /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B341112327C0E00083FA5A /* MainViewModel.swift */; };
@@ -23,8 +27,8 @@
 		F0B3412E2328E98F0083FA5A /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B3412D2328E98F0083FA5A /* GradientView.swift */; };
 		F0B341332328F4760083FA5A /* BackgroundEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B341322328F4760083FA5A /* BackgroundEnum.swift */; };
 		F0B34136232A0EBE0083FA5A /* SettingsScreenModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B34135232A0EBE0083FA5A /* SettingsScreenModel.swift */; };
-		F0B34138232A0F0A0083FA5A /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B34137232A0F0A0083FA5A /* SettingViewController.swift */; };
-		F0B3413A232A0F190083FA5A /* SettingViewCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B34139232A0F190083FA5A /* SettingViewCoordinator.swift */; };
+		F0B34138232A0F0A0083FA5A /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B34137232A0F0A0083FA5A /* SettingsViewController.swift */; };
+		F0B3413A232A0F190083FA5A /* SettingsViewCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B34139232A0F190083FA5A /* SettingsViewCoordinator.swift */; };
 		F0B3413D232A0F310083FA5A /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B3413C232A0F310083FA5A /* SearchViewModel.swift */; };
 		F0B3413F232A0F460083FA5A /* SearchViewCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B3413E232A0F460083FA5A /* SearchViewCoordinator.swift */; };
 		F0B34141232A0F500083FA5A /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B34140232A0F500083FA5A /* SearchViewController.swift */; };
@@ -66,6 +70,10 @@
 		3D2ECB94DBE0166A32C5BCCB /* Pods-WheatherAppFactoryTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WheatherAppFactoryTests.release.xcconfig"; path = "Target Support Files/Pods-WheatherAppFactoryTests/Pods-WheatherAppFactoryTests.release.xcconfig"; sourceTree = "<group>"; };
 		50E2D66C2814E5AB66B93023 /* Pods-WheatherAppFactory.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WheatherAppFactory.debug.xcconfig"; path = "Target Support Files/Pods-WheatherAppFactory/Pods-WheatherAppFactory.debug.xcconfig"; sourceTree = "<group>"; };
 		8AFBA8B7DC768CB52903B8E2 /* Pods_WheatherAppFactoryTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WheatherAppFactoryTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F00821F6232B5E72006CEA6F /* DataDoneEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataDoneEnum.swift; sourceTree = "<group>"; };
+		F00821F8232B832C006CEA6F /* SettingsScreenClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsScreenClass.swift; sourceTree = "<group>"; };
+		F00821FA232B8B61006CEA6F /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
+		F00821FC232BAC57006CEA6F /* DoneButtonIsPressedDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoneButtonIsPressedDelegate.swift; sourceTree = "<group>"; };
 		F0B3410D2327B9750083FA5A /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		F0B3410F2327BE090083FA5A /* MainViewCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewCoordinator.swift; sourceTree = "<group>"; };
 		F0B341112327C0E00083FA5A /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
@@ -80,8 +88,8 @@
 		F0B3412D2328E98F0083FA5A /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		F0B341322328F4760083FA5A /* BackgroundEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundEnum.swift; sourceTree = "<group>"; };
 		F0B34135232A0EBE0083FA5A /* SettingsScreenModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsScreenModel.swift; sourceTree = "<group>"; };
-		F0B34137232A0F0A0083FA5A /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
-		F0B34139232A0F190083FA5A /* SettingViewCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewCoordinator.swift; sourceTree = "<group>"; };
+		F0B34137232A0F0A0083FA5A /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		F0B34139232A0F190083FA5A /* SettingsViewCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewCoordinator.swift; sourceTree = "<group>"; };
 		F0B3413C232A0F310083FA5A /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		F0B3413E232A0F460083FA5A /* SearchViewCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewCoordinator.swift; sourceTree = "<group>"; };
 		F0B34140232A0F500083FA5A /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
@@ -156,6 +164,7 @@
 			isa = PBXGroup;
 			children = (
 				F0EF432B2327B6F800D2D1F7 /* AppDelegate.swift */,
+				F00821FC232BAC57006CEA6F /* DoneButtonIsPressedDelegate.swift */,
 				F0B34148232A60670083FA5A /* ChangeLocationBasedOnSelection.swift */,
 			);
 			path = Delegates;
@@ -184,6 +193,7 @@
 			isa = PBXGroup;
 			children = (
 				F0B341172327C5A10083FA5A /* MainDataClass.swift */,
+				F00821F8232B832C006CEA6F /* SettingsScreenClass.swift */,
 				F0B34144232A474F0083FA5A /* LocationDataClass.swift */,
 			);
 			path = Classes;
@@ -193,6 +203,7 @@
 			isa = PBXGroup;
 			children = (
 				F0B3411A2327CC660083FA5A /* WeatherRepository.swift */,
+				F00821FA232B8B61006CEA6F /* RealmManager.swift */,
 				F0B341212328CEE90083FA5A /* AlamofireManager.swift */,
 				F0B34142232A46A30083FA5A /* LocationRepository.swift */,
 			);
@@ -212,26 +223,27 @@
 			isa = PBXGroup;
 			children = (
 				F0B341322328F4760083FA5A /* BackgroundEnum.swift */,
+				F00821F6232B5E72006CEA6F /* DataDoneEnum.swift */,
 			);
 			path = Enum;
 			sourceTree = "<group>";
 		};
-		F0B34134232A0EA20083FA5A /* SettingScreen */ = {
+		F0B34134232A0EA20083FA5A /* SettingsScreen */ = {
 			isa = PBXGroup;
 			children = (
+				F0B34137232A0F0A0083FA5A /* SettingsViewController.swift */,
 				F0B34135232A0EBE0083FA5A /* SettingsScreenModel.swift */,
-				F0B34137232A0F0A0083FA5A /* SettingViewController.swift */,
-				F0B34139232A0F190083FA5A /* SettingViewCoordinator.swift */,
+				F0B34139232A0F190083FA5A /* SettingsViewCoordinator.swift */,
 			);
-			path = SettingScreen;
+			path = SettingsScreen;
 			sourceTree = "<group>";
 		};
 		F0B3413B232A0F1E0083FA5A /* SearchScreen */ = {
 			isa = PBXGroup;
 			children = (
 				F0B3413C232A0F310083FA5A /* SearchViewModel.swift */,
-				F0B3413E232A0F460083FA5A /* SearchViewCoordinator.swift */,
 				F0B34140232A0F500083FA5A /* SearchViewController.swift */,
+				F0B3413E232A0F460083FA5A /* SearchViewCoordinator.swift */,
 			);
 			path = SearchScreen;
 			sourceTree = "<group>";
@@ -276,7 +288,7 @@
 				F0B341192327CC480083FA5A /* Manager */,
 				F0B3414E232A70070083FA5A /* TableViewCell */,
 				F0B3413B232A0F1E0083FA5A /* SearchScreen */,
-				F0B34134232A0EA20083FA5A /* SettingScreen */,
+				F0B34134232A0EA20083FA5A /* SettingsScreen */,
 				F0B341142327C56E0083FA5A /* MainView */,
 				F0B341152327C5830083FA5A /* Coordinator */,
 				F0EF43322327B6F900D2D1F7 /* Assets.xcassets */,
@@ -551,9 +563,11 @@
 			files = (
 				F0B341332328F4760083FA5A /* BackgroundEnum.swift in Sources */,
 				F0B3411B2327CC660083FA5A /* WeatherRepository.swift in Sources */,
-				F0B3413A232A0F190083FA5A /* SettingViewCoordinator.swift in Sources */,
+				F0B3413A232A0F190083FA5A /* SettingsViewCoordinator.swift in Sources */,
 				F0B3413F232A0F460083FA5A /* SearchViewCoordinator.swift in Sources */,
 				F0B341182327C5A10083FA5A /* MainDataClass.swift in Sources */,
+				F00821FB232B8B61006CEA6F /* RealmManager.swift in Sources */,
+				F00821F9232B832C006CEA6F /* SettingsScreenClass.swift in Sources */,
 				F0B34143232A46A30083FA5A /* LocationRepository.swift in Sources */,
 				F0B341122327C0E00083FA5A /* MainViewModel.swift in Sources */,
 				F0B3410E2327B9750083FA5A /* Coordinator.swift in Sources */,
@@ -564,11 +578,13 @@
 				F0B34147232A594C0083FA5A /* LocationsTableViewCell.swift in Sources */,
 				F0B34141232A0F500083FA5A /* SearchViewController.swift in Sources */,
 				F0B341102327BE090083FA5A /* MainViewCoordinator.swift in Sources */,
+				F00821FD232BAC57006CEA6F /* DoneButtonIsPressedDelegate.swift in Sources */,
 				F0EF432E2327B6F800D2D1F7 /* MainViewController.swift in Sources */,
+				F00821F7232B5E72006CEA6F /* DataDoneEnum.swift in Sources */,
 				F0EF432C2327B6F800D2D1F7 /* AppDelegate.swift in Sources */,
 				F0B34145232A474F0083FA5A /* LocationDataClass.swift in Sources */,
 				F0B3412E2328E98F0083FA5A /* GradientView.swift in Sources */,
-				F0B34138232A0F0A0083FA5A /* SettingViewController.swift in Sources */,
+				F0B34138232A0F0A0083FA5A /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

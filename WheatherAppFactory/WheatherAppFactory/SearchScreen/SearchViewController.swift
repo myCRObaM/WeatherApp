@@ -10,6 +10,10 @@ import Foundation
 import UIKit
 import RxSwift
 
+protocol hideViewController{
+    func didLoadData()
+}
+
 class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource  {
     
     let viewModel: SearchViewModel!
@@ -19,6 +23,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
     var bottomConstraint: NSLayoutConstraint?
     let disposeBag = DisposeBag()
     var selectedLocationButton: ChangeLocationBasedOnSelection!
+    var vSpinner : UIView?
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -45,9 +50,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let data = viewModel.locationData[0].postalcodes[indexPath.row]
-        searchBar.endEditing(true)
-        self.dismiss(animated: false, completion: nil)
-        cancelButtonPressed.hideViewController()
+        showSpinner(onView: self.view)
         selectedLocationButton.didSelectLocation(long: data.lat, lat: data.lng, location: data.placeName)
     }
     
@@ -157,11 +160,17 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
     }
     @objc func screenPressed(gesture: UITapGestureRecognizer){
         if gesture.state == .began {
-            searchBar.endEditing(true)
-            self.dismiss(animated: false, completion: nil)
-            cancelButtonPressed.hideViewController()
+            handleHidingViewController()
         }
     }
+    
+    func handleHidingViewController() {
+        removeSpinner()
+        cancelButtonPressed.hideViewController()
+        searchBar.endEditing(true)
+        self.dismiss(animated: false, completion: nil)
+    }
+    
     @objc func keyboardWillShow(notification: NSNotification){
         UIView.setAnimationsEnabled(true)
         if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
@@ -203,4 +212,31 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
             })
     }
     
+    func showSpinner(onView : UIView) {
+        let spinnerView = UIView.init(frame: onView.bounds)
+        spinnerView.backgroundColor = UIColor.init(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
+        let ai = UIActivityIndicatorView.init(style: .whiteLarge)
+        ai.startAnimating()
+        ai.center = spinnerView.center
+        
+        DispatchQueue.main.async {
+            spinnerView.addSubview(ai)
+            onView.addSubview(spinnerView)
+        }
+        
+        vSpinner = spinnerView
+    }
+    
+    func removeSpinner() {
+        DispatchQueue.main.async {
+            self.vSpinner?.removeFromSuperview()
+            self.vSpinner = nil
+        }
+    }
+    
+}
+extension SearchViewController: hideViewController {
+    func didLoadData() {
+        handleHidingViewController()
+    }
 }

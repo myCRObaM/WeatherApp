@@ -7,6 +7,14 @@
 //
 
 import Foundation
+import UIKit
+
 protocol ChangeLocationBasedOnSelection {
     func didSelectLocation(long: Double, lat: Double, location: String)
+}
+protocol SearchScreenDelegate {
+    func openSearchScreen(searchBar: UISearchBar, rootController: MainViewController)
+}
+protocol hideKeyboard {
+    func hideViewController()
 }

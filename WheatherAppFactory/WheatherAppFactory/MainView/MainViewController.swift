@@ -10,15 +10,6 @@ import UIKit
 import RxSwift
 import Hue
 
-protocol hideKeyboard {
-    func hideViewController()
-}
-
-protocol SearchScreenDelegate {
-    func openSearchScreen(searchBar: UISearchBar, rootController: MainViewController)
-}
-
-
 class MainViewController: UIViewController, UISearchBarDelegate{
     
     let viewModel: MainViewModel!
@@ -28,8 +19,10 @@ class MainViewController: UIViewController, UISearchBarDelegate{
     var speedUnit: String = "km/h"
     var searchBarCenterY: NSLayoutConstraint!
     var openSearchScreenDelegate: SearchScreenDelegate!
+    var openSettingScreenDelegate: SettingsScreenDelegate!
     var locationText: String = "Zagreb"
     var vSpinner : UIView?
+    var dataIsDoneLoading: hideViewController!
     
     
     let gradient: CAGradientLayer = {
@@ -333,23 +326,6 @@ class MainViewController: UIViewController, UISearchBarDelegate{
         
         highAndLowTempStackView.addArrangedSubview(highTempStackView)
         
-        humidityStackView.addArrangedSubview(humidityImage)
-        humidityStackView.addArrangedSubview(humidityLabel)
-        
-        windStackView.addArrangedSubview(windImage)
-        windStackView.addArrangedSubview(windLabel)
-        
-        pressureStackView.addArrangedSubview(pressureImage)
-        pressureStackView.addArrangedSubview(pressureLabel)
-        
-        moreInfoStackView.addArrangedSubview(humidityStackView)
-        moreInfoStackView.addArrangedSubview(windStackView)
-        moreInfoStackView.addArrangedSubview(pressureStackView)
-        
-        
-        //        searchBarStackView.addArrangedSubview(settingsImage)
-        //        searchBarStackView.addArrangedSubview(searchBar)
-        
         setupConstraints()
         
         settingsImage.addTarget(self, action: #selector(settingPressed), for: .touchUpInside)
@@ -401,16 +377,61 @@ class MainViewController: UIViewController, UISearchBarDelegate{
         
         NSLayoutConstraint.activate([
             settingsImage.topAnchor.constraint(equalTo: moreInfoStackView.bottomAnchor, constant: view.bounds.height/11),
-            //settingsImage.centerYAnchor.constraint(equalTo: searchBar.centerYAnchor),
             settingsImage.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
             ])
         setupSearchBarConstraints()
     }
     
+    func checkSettings(){
+        if viewModel.settingsObjects.humidityIsSelected {
+            setupHumidity()
+        }
+        else {
+            moreInfoStackView.removeArrangedSubview(humidityStackView)
+            humidityStackView.removeFromSuperview()
+        }
+        if viewModel.settingsObjects.windIsSelected {
+            setupWind()
+        }
+        else {
+            moreInfoStackView.removeArrangedSubview(windStackView)
+            windStackView.removeFromSuperview()
+        }
+        if viewModel.settingsObjects.pressureIsSelected {
+            setupPressure()
+        }
+        else {
+            moreInfoStackView.removeArrangedSubview(pressureStackView)
+            pressureStackView.removeFromSuperview()
+        }
+        checkForChangesInUnits()
+    }
+    
+    func setupHumidity(){
+        humidityStackView.addArrangedSubview(humidityImage)
+        humidityStackView.addArrangedSubview(humidityLabel)
+        
+        moreInfoStackView.addArrangedSubview(humidityStackView)
+    }
+    func setupWind(){
+        windStackView.addArrangedSubview(windImage)
+        windStackView.addArrangedSubview(windLabel)
+        
+        moreInfoStackView.addArrangedSubview(windStackView)
+    }
+    func setupPressure(){
+        pressureStackView.addArrangedSubview(pressureImage)
+        pressureStackView.addArrangedSubview(pressureLabel)
+    
+        moreInfoStackView.addArrangedSubview(pressureStackView)
+    }
+    
     func setupViewModel(){
         viewModel.getData(subject: viewModel.getDataSubject).disposed(by: disposeBag)
         spinnerControl(subject: viewModel.dataIsDoneLoading).disposed(by: disposeBag)
-        viewModel.getDataSubject.onNext(viewModel.locationToUse)
+        viewModel.addObjectToRealm(subject: viewModel.firstLoadOfRealm).disposed(by: disposeBag)
+        viewModel.loadDataForScreen(subject: viewModel.loadSettingSubject).disposed(by: disposeBag)
+        viewModel.loadSettingSubject.onNext(true)
     }
     func setupSearchBar() {
         let searchTextField:UITextField = searchBar.subviews[0].subviews.last as! UITextField
@@ -430,12 +451,8 @@ class MainViewController: UIViewController, UISearchBarDelegate{
         searchTextField.rightViewMode = UITextField.ViewMode.always
     }
     func setupData(){
-        checkForChangesInUnits()
         let weatherData = viewModel.mainWeatherData.currently
-//        var currentLocation: String = ""
-//        if let index = (viewModel.mainWeatherData.timezone.range(of: "/")?.upperBound){
-//            currentLocation = String(viewModel.mainWeatherData.timezone.suffix(from: index))
-//        }
+        checkSettings()
         currentTemperatureLabel.text = String(Int(weatherData.temperature)) + "°"
         currentSummaryLabel.text = weatherData.summary
         location.text = locationText
@@ -447,9 +464,16 @@ class MainViewController: UIViewController, UISearchBarDelegate{
         mainBodyImage.image = UIImage(named: "body_image-\(imageExtension)")
         setupGradient(weatherData)
         setupLowAndHighTemperatures(viewModel.mainWeatherData)
+        viewModel.isDownloadingFromSearch = false
     }
     
     func checkForChangesInUnits(){
+        if viewModel.settingsObjects.metricSelected {
+            viewModel.unitMode = "si"
+        } else {
+            viewModel.unitMode = "us"
+        }
+        
         if viewModel.unitMode == "si" {
             tempUnits = "°C"
             speedUnit = "km/h"
@@ -518,11 +542,13 @@ class MainViewController: UIViewController, UISearchBarDelegate{
             searchBar.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10)
             ])
         view.addConstraint(searchBarCenterY)
-        
+
     }
+    
     @objc func settingPressed(){
-        
+        openSettingScreenDelegate.buttonPressed(rootController: self)
     }
+    
     func searchBarPressed(){
         openSearchScreenDelegate.openSearchScreen(searchBar: searchBar, rootController: self)
     }
@@ -532,17 +558,24 @@ class MainViewController: UIViewController, UISearchBarDelegate{
         return false
     }
     
-    func spinnerControl(subject: PublishSubject<Bool>) -> Disposable{
+    func spinnerControl(subject: PublishSubject<DataDoneEnum>) -> Disposable{
         return subject
             .observeOn(MainScheduler.instance)
             .subscribeOn(viewModel.scheduler)
             .subscribe(onNext: {[unowned self] bool in
                 switch bool {
-                case true:
+                case .dataForMainDone:
                     self.setupData()
                     self.removeSpinner()
-                case false:
-                    self.showSpinner(onView: self.view)
+                case .dataNotReady:
+                     self.showSpinner(onView: self.view)
+                case .dataFromSearchDone:
+                    self.view.addSubview(self.searchBar)
+                    self.setupSearchBarConstraints()
+                    self.searchBar.text = ""
+                    self.dataIsDoneLoading.didLoadData()
+                    self.setupData()
+                    self.removeSpinner()
                 }
                 
             })
@@ -569,21 +602,32 @@ class MainViewController: UIViewController, UISearchBarDelegate{
         }
     }
     
+    func hideSearch(){
+        self.view.addSubview(self.searchBar)
+        self.setupSearchBarConstraints()
+        self.searchBar.text = ""
+    }
+    
 }
 extension MainViewController: hideKeyboard {
     func hideViewController() {
-        view.addSubview(searchBar)
-        setupSearchBarConstraints()
-        searchBar.text = ""
+        hideSearch()
     }
 }
 
 extension MainViewController: ChangeLocationBasedOnSelection{
     func didSelectLocation(long: Double, lat: Double, location: String) {
+        viewModel.isDownloadingFromSearch = true
         viewModel.locationToUse = String(String(long) + "," + String(String(lat)))
         viewModel.getDataSubject.onNext(viewModel.locationToUse)
         self.locationText = location
     }
-    
-    
+}
+
+extension MainViewController: DoneButtonIsPressedDelegate {
+    func close(settings: SettingsScreenObject) {
+        viewModel.settingsObjects = settings
+        checkForChangesInUnits()
+        viewModel.loadSettingSubject.onNext(true)
+    }
 }
