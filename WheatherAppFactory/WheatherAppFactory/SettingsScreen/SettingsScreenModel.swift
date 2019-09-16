@@ -56,7 +56,7 @@ class SettingsScreenModel {
             .subscribeOn(scheduler)
             .subscribe(onNext: {[unowned self]  objects in
                 self.locationsArray = objects
-                for (n, location) in objects.enumerated() {
+                for (n, _) in objects.enumerated() {
                      self.dataIsDoneSubject.onNext(.add(n))
                 }
             })

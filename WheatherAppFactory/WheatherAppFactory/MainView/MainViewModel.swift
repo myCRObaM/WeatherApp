@@ -21,7 +21,7 @@ class MainViewModel {
     let firstLoadOfRealm = PublishSubject<Bool>()
     let setupCurrentLocationSubject = PublishSubject<Bool>()
     let addLocationToRealmSubject = PublishSubject<Bool>()
-    let getLocationSubject = ReplaySubject<Bool>.create(bufferSize: 1)
+    let getLocationSubject = PublishSubject<Bool>()
     
    
     let scheduler: SchedulerType

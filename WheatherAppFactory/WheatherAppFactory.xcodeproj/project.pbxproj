@@ -11,6 +11,8 @@
 		95EA4967BEF5BC2D77ED3E2A /* Pods_WheatherAppFactoryTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AFBA8B7DC768CB52903B8E2 /* Pods_WheatherAppFactoryTests.framework */; };
 		F003A098232F8013002F6955 /* LocationSettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F003A097232F8013002F6955 /* LocationSettingsTableViewCell.swift */; };
 		F003A09A232F84FF002F6955 /* CellControllEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = F003A099232F84FF002F6955 /* CellControllEnum.swift */; };
+		F003A09C232F8DE4002F6955 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F003A09B232F8DE4002F6955 /* MainView.swift */; };
+		F003A0A0232FA162002F6955 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F003A09F232FA162002F6955 /* SettingsView.swift */; };
 		F00821F7232B5E72006CEA6F /* DataDoneEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00821F6232B5E72006CEA6F /* DataDoneEnum.swift */; };
 		F00821F9232B832C006CEA6F /* SettingsScreenClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00821F8232B832C006CEA6F /* SettingsScreenClass.swift */; };
 		F00821FB232B8B61006CEA6F /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00821FA232B8B61006CEA6F /* RealmManager.swift */; };
@@ -74,6 +76,8 @@
 		8AFBA8B7DC768CB52903B8E2 /* Pods_WheatherAppFactoryTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WheatherAppFactoryTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F003A097232F8013002F6955 /* LocationSettingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSettingsTableViewCell.swift; sourceTree = "<group>"; };
 		F003A099232F84FF002F6955 /* CellControllEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellControllEnum.swift; sourceTree = "<group>"; };
+		F003A09B232F8DE4002F6955 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		F003A09F232FA162002F6955 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		F00821F6232B5E72006CEA6F /* DataDoneEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataDoneEnum.swift; sourceTree = "<group>"; };
 		F00821F8232B832C006CEA6F /* SettingsScreenClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsScreenClass.swift; sourceTree = "<group>"; };
 		F00821FA232B8B61006CEA6F /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
@@ -178,8 +182,9 @@
 			isa = PBXGroup;
 			children = (
 				F0EF432D2327B6F800D2D1F7 /* MainViewController.swift */,
-				F0B3410F2327BE090083FA5A /* MainViewCoordinator.swift */,
 				F0B341112327C0E00083FA5A /* MainViewModel.swift */,
+				F003A09B232F8DE4002F6955 /* MainView.swift */,
+				F0B3410F2327BE090083FA5A /* MainViewCoordinator.swift */,
 				F0B3412D2328E98F0083FA5A /* GradientView.swift */,
 			);
 			path = MainView;
@@ -238,6 +243,7 @@
 			children = (
 				F0B34137232A0F0A0083FA5A /* SettingsViewController.swift */,
 				F0B34135232A0EBE0083FA5A /* SettingsScreenModel.swift */,
+				F003A09F232FA162002F6955 /* SettingsView.swift */,
 				F0B34139232A0F190083FA5A /* SettingsViewCoordinator.swift */,
 			);
 			path = SettingsScreen;
@@ -573,6 +579,7 @@
 				F0B3413F232A0F460083FA5A /* SearchViewCoordinator.swift in Sources */,
 				F0B341182327C5A10083FA5A /* MainDataClass.swift in Sources */,
 				F00821FB232B8B61006CEA6F /* RealmManager.swift in Sources */,
+				F003A09C232F8DE4002F6955 /* MainView.swift in Sources */,
 				F00821F9232B832C006CEA6F /* SettingsScreenClass.swift in Sources */,
 				F0B34143232A46A30083FA5A /* LocationRepository.swift in Sources */,
 				F0B341122327C0E00083FA5A /* MainViewModel.swift in Sources */,
@@ -587,6 +594,7 @@
 				F003A098232F8013002F6955 /* LocationSettingsTableViewCell.swift in Sources */,
 				F0B341102327BE090083FA5A /* MainViewCoordinator.swift in Sources */,
 				F00821FD232BAC57006CEA6F /* DoneButtonIsPressedDelegate.swift in Sources */,
+				F003A0A0232FA162002F6955 /* SettingsView.swift in Sources */,
 				F0EF432E2327B6F800D2D1F7 /* MainViewController.swift in Sources */,
 				F00821F7232B5E72006CEA6F /* DataDoneEnum.swift in Sources */,
 				F0EF432C2327B6F800D2D1F7 /* AppDelegate.swift in Sources */,
