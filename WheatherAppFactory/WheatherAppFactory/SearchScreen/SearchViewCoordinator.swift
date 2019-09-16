@@ -26,15 +26,9 @@ class SearchViewCoordinator: Coordinator {
         let viewController = SearchViewController(model: viewModel, searchBar: searchBar)
         viewController.cancelButtonPressed = rootController
         rootController.dataIsDoneLoading = viewController
-//        let tranisition = CATransition()
-//        tranisition.duration = 1
-//        tranisition.type = .fade
-//        tranisition.subtype = .fromBottom
-//        rootController.view.window?.layer.add(tranisition, forKey: kCATransition)
         viewController.selectedLocationButton = rootController
         viewController.modalPresentationStyle = .overFullScreen
         rootController.present(viewController, animated: false) {
-            
         }
         
     }

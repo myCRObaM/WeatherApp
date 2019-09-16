@@ -37,6 +37,8 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Allow this app to view your location for first time setup?</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>GothamRounded-Light.otf</string>

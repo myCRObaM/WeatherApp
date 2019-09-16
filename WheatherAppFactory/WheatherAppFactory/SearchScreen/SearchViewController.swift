@@ -51,7 +51,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let data = viewModel.locationData[0].postalcodes[indexPath.row]
         showSpinner(onView: self.view)
-        selectedLocationButton.didSelectLocation(long: data.lat, lat: data.lng, location: data.placeName)
+        selectedLocationButton.didSelectLocation(long: data.lng, lat: data.lat, location: data.placeName, countryc: data.countryCode)
     }
     
     let searchView: UIView = {

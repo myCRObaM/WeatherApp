@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		48D209350E7E2F0E50BE7F66 /* Pods_WheatherAppFactory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07CE554DA8D5DF4653E0A518 /* Pods_WheatherAppFactory.framework */; };
 		95EA4967BEF5BC2D77ED3E2A /* Pods_WheatherAppFactoryTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AFBA8B7DC768CB52903B8E2 /* Pods_WheatherAppFactoryTests.framework */; };
+		F003A098232F8013002F6955 /* LocationSettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F003A097232F8013002F6955 /* LocationSettingsTableViewCell.swift */; };
+		F003A09A232F84FF002F6955 /* CellControllEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = F003A099232F84FF002F6955 /* CellControllEnum.swift */; };
 		F00821F7232B5E72006CEA6F /* DataDoneEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00821F6232B5E72006CEA6F /* DataDoneEnum.swift */; };
 		F00821F9232B832C006CEA6F /* SettingsScreenClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00821F8232B832C006CEA6F /* SettingsScreenClass.swift */; };
 		F00821FB232B8B61006CEA6F /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00821FA232B8B61006CEA6F /* RealmManager.swift */; };
@@ -70,6 +72,8 @@
 		3D2ECB94DBE0166A32C5BCCB /* Pods-WheatherAppFactoryTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WheatherAppFactoryTests.release.xcconfig"; path = "Target Support Files/Pods-WheatherAppFactoryTests/Pods-WheatherAppFactoryTests.release.xcconfig"; sourceTree = "<group>"; };
 		50E2D66C2814E5AB66B93023 /* Pods-WheatherAppFactory.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WheatherAppFactory.debug.xcconfig"; path = "Target Support Files/Pods-WheatherAppFactory/Pods-WheatherAppFactory.debug.xcconfig"; sourceTree = "<group>"; };
 		8AFBA8B7DC768CB52903B8E2 /* Pods_WheatherAppFactoryTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WheatherAppFactoryTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F003A097232F8013002F6955 /* LocationSettingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSettingsTableViewCell.swift; sourceTree = "<group>"; };
+		F003A099232F84FF002F6955 /* CellControllEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellControllEnum.swift; sourceTree = "<group>"; };
 		F00821F6232B5E72006CEA6F /* DataDoneEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataDoneEnum.swift; sourceTree = "<group>"; };
 		F00821F8232B832C006CEA6F /* SettingsScreenClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsScreenClass.swift; sourceTree = "<group>"; };
 		F00821FA232B8B61006CEA6F /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
@@ -223,6 +227,7 @@
 			isa = PBXGroup;
 			children = (
 				F0B341322328F4760083FA5A /* BackgroundEnum.swift */,
+				F003A099232F84FF002F6955 /* CellControllEnum.swift */,
 				F00821F6232B5E72006CEA6F /* DataDoneEnum.swift */,
 			);
 			path = Enum;
@@ -252,6 +257,7 @@
 			isa = PBXGroup;
 			children = (
 				F0B34146232A594C0083FA5A /* LocationsTableViewCell.swift */,
+				F003A097232F8013002F6955 /* LocationSettingsTableViewCell.swift */,
 			);
 			path = TableViewCell;
 			sourceTree = "<group>";
@@ -574,9 +580,11 @@
 				F0B34149232A60670083FA5A /* ChangeLocationBasedOnSelection.swift in Sources */,
 				F0B341222328CEE90083FA5A /* AlamofireManager.swift in Sources */,
 				F0B34136232A0EBE0083FA5A /* SettingsScreenModel.swift in Sources */,
+				F003A09A232F84FF002F6955 /* CellControllEnum.swift in Sources */,
 				F0B3413D232A0F310083FA5A /* SearchViewModel.swift in Sources */,
 				F0B34147232A594C0083FA5A /* LocationsTableViewCell.swift in Sources */,
 				F0B34141232A0F500083FA5A /* SearchViewController.swift in Sources */,
+				F003A098232F8013002F6955 /* LocationSettingsTableViewCell.swift in Sources */,
 				F0B341102327BE090083FA5A /* MainViewCoordinator.swift in Sources */,
 				F00821FD232BAC57006CEA6F /* DoneButtonIsPressedDelegate.swift in Sources */,
 				F0EF432E2327B6F800D2D1F7 /* MainViewController.swift in Sources */,

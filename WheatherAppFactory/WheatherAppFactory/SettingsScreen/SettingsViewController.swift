@@ -15,19 +15,25 @@ import RxSwift
 class SettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return viewModel.locationsArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "cellID", for: indexPath) as? LocationTableViewCell else {
+        let dataToUse = viewModel.locationsArray[indexPath.row]
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "cellID", for: indexPath) as? LocationSettingsTableViewCell else {
             fatalError("nije settano")
             
         }
-        cell.setupCell(data: PostalCodes(placeName: "Neki", countryCode: "hr", lng: 23.2, lat: 12.3))
+        cell.setupCell(data: PostalCodes(placeName: dataToUse.placeName, countryCode: dataToUse.countryCode, lng: dataToUse.lng, lat: dataToUse.lat))
+        cell.deleteButtonPressed = self
         cell.backgroundColor = .clear
-        cell.selectionStyle = .none
+        cell.selectionStyle = .default
 
         return cell
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        viewModel.currentLocation = viewModel.locationsArray[indexPath.row]
+        viewModel.settingsObjects.lastSelectedLocation = viewModel.currentLocation.placeName
     }
     
     let viewModel: SettingsScreenModel!
@@ -283,7 +289,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.register(LocationTableViewCell.self, forCellReuseIdentifier: "cellID")
+        tableView.register(LocationSettingsTableViewCell.self, forCellReuseIdentifier: "cellID")
         
         
         metricUnitsStackView.addArrangedSubview(metricButton)
@@ -306,6 +312,11 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         view.addSubview(allConditionsStackView)
         
         viewModel.updateRealmSettingsObject(subject: viewModel.getDataSubject).disposed(by: disposeBag)
+        viewModel.loadLocationsFromRealm(subject: viewModel!.getLocationsDataSubject).disposed(by: disposeBag)
+        reloadTableView(subject: viewModel.dataIsDoneSubject).disposed(by: disposeBag)
+        viewModel.getLocationsDataSubject.onNext(true)
+        viewModel.deleteObjectFromRealm(subject: viewModel.removeLocationSubject).disposed(by: disposeBag)
+        
         dataIsLoaded()
         setupConstraints()
         setupButtons()
@@ -413,6 +424,26 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     @objc func donePressed(){
         self.dismiss(animated: false, completion: nil)
         viewModel.getDataSubject.onNext(true)
-        doneButtonPressedDelegate.close(settings: viewModel.settingsObjects)
+        doneButtonPressedDelegate.close(settings: viewModel.settingsObjects, location: viewModel.currentLocation)
+    }
+    
+    func reloadTableView(subject: PublishSubject<CellControllEnum>) -> Disposable {
+        return subject
+            .observeOn(MainScheduler.instance)
+            .subscribeOn(viewModel.scheduler)
+            .subscribe(onNext: {[unowned self]  bool in
+                switch bool {
+                case let .add(index):
+                    self.tableView.insertRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
+                case let .remove(index):
+                    self.tableView.deleteRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
+                }
+            })
+    }
+}
+extension SettingsViewController: DeleteButtonIsPressed {
+    func deletePressed(name: String) {
+        print("presseed\(name)")
+        viewModel.removeLocationSubject.onNext(name)
     }
 }

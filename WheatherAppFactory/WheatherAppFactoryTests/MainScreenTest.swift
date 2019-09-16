@@ -35,13 +35,13 @@ class MainScreenTest: QuickSpec {
                 }
             }
             context("Initialize viewModel"){
-                var dataReadySubject: TestableObserver<Bool>!
+                var dataReadySubject: TestableObserver<DataDoneEnum>!
                 beforeEach {
                     testScheduler = TestScheduler(initialClock: 0)
                     mainViewModel = MainViewModel(scheduler: testScheduler, repository: mockedWeatherRepository)
                     mainViewModel.getData(subject: mainViewModel.getDataSubject).disposed(by: disposeBag)
                     
-                    dataReadySubject = testScheduler.createObserver(Bool.self)
+                    dataReadySubject = testScheduler.createObserver(DataDoneEnum.self)
                     
                     mainViewModel.dataIsDoneLoading.subscribe(dataReadySubject).disposed(by: disposeBag)
                 }
@@ -49,8 +49,8 @@ class MainScreenTest: QuickSpec {
                     testScheduler.start()
                     mainViewModel.getDataSubject.onNext("asd")
                     
-                    expect(dataReadySubject.events.count).to(equal(1))
-                    expect(dataReadySubject.events[0].value.element).to(equal(true))
+                    expect(dataReadySubject.events.count).to(equal(2))
+                    expect(dataReadySubject.events[0].value.element).to(equal(.dataNotReady))
                 }
                 it("Check if data is loaded into the viewModel"){
                     testScheduler.start()

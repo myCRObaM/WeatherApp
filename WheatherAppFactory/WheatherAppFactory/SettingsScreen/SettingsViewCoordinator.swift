@@ -19,7 +19,7 @@ class SettingsViewCoordinator: Coordinator {
     }
     
     func start() {
-        let viewModel = SettingsScreenModel(scheduler: ConcurrentDispatchQueueScheduler(qos: .background), settings: rootController.viewModel.settingsObjects)
+        let viewModel = SettingsScreenModel(scheduler: ConcurrentDispatchQueueScheduler(qos: .background), settings: rootController.viewModel.settingsObjects, location: rootController.viewModel.locationsData)
         viewModel.doneButtonPressedDelegate = rootController
         let settingsVC = SettingsViewController(viewModel: viewModel)
         settingsVC.modalPresentationStyle = .overFullScreen

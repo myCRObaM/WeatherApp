@@ -8,7 +8,7 @@
 
 import Foundation
 protocol DoneButtonIsPressedDelegate {
-    func close(settings: SettingsScreenObject)
+    func close(settings: SettingsScreenObject, location: LocationsObject)
 }
 
 protocol SettingsScreenDelegate {

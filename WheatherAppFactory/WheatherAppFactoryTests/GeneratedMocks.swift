@@ -1,4 +1,4 @@
-// MARK: - Mocks generated from file: WheatherAppFactory/Manager/LocationRepository.swift at 2019-09-12 12:18:49 +0000
+// MARK: - Mocks generated from file: WheatherAppFactory/Manager/LocationRepository.swift at 2019-09-16 09:11:20 +0000
 
 //
 //  LocationRepository.swift
@@ -105,7 +105,7 @@ import RxSwift
 }
 
 
-// MARK: - Mocks generated from file: WheatherAppFactory/Manager/WeatherRepository.swift at 2019-09-12 12:18:49 +0000
+// MARK: - Mocks generated from file: WheatherAppFactory/Manager/WeatherRepository.swift at 2019-09-16 09:11:20 +0000
 
 //
 //  WeatherRepository.swift

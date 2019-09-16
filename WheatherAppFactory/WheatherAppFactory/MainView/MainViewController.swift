@@ -9,8 +9,10 @@
 import UIKit
 import RxSwift
 import Hue
+import MapKit
+import CoreLocation
 
-class MainViewController: UIViewController, UISearchBarDelegate{
+class MainViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDelegate{
     
     let viewModel: MainViewModel!
     let disposeBag = DisposeBag()
@@ -20,9 +22,10 @@ class MainViewController: UIViewController, UISearchBarDelegate{
     var searchBarCenterY: NSLayoutConstraint!
     var openSearchScreenDelegate: SearchScreenDelegate!
     var openSettingScreenDelegate: SettingsScreenDelegate!
-    var locationText: String = "Zagreb"
+    
     var vSpinner : UIView?
     var dataIsDoneLoading: hideViewController!
+    let locationManager = CLLocationManager()
     
     
     let gradient: CAGradientLayer = {
@@ -431,8 +434,55 @@ class MainViewController: UIViewController, UISearchBarDelegate{
         spinnerControl(subject: viewModel.dataIsDoneLoading).disposed(by: disposeBag)
         viewModel.addObjectToRealm(subject: viewModel.firstLoadOfRealm).disposed(by: disposeBag)
         viewModel.loadDataForScreen(subject: viewModel.loadSettingSubject).disposed(by: disposeBag)
+        viewModel.loadLocationsFromRealm(subject: viewModel!.setupCurrentLocationSubject).disposed(by: disposeBag)
+        locationManager.requestWhenInUseAuthorization()
         viewModel.loadSettingSubject.onNext(true)
+        setupLocation(subject: viewModel.getLocationSubject).disposed(by: disposeBag)
+        viewModel.addLocationToRealm(subject: viewModel.addLocationToRealmSubject).disposed(by: disposeBag)
     }
+    func setupLocation(subject: ReplaySubject<Bool>) -> Disposable{
+        return subject
+            .observeOn(MainScheduler.instance)
+            .subscribeOn(viewModel.scheduler)
+            .subscribe(onNext: {[unowned self] bool in
+                switch bool{
+                case true:
+                    if CLLocationManager.locationServicesEnabled() {
+                        self.locationManager.delegate = self
+                        self.locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
+                        self.locationManager.startUpdatingLocation()
+                    }
+                case false:
+                        self.locationManager.stopUpdatingLocation()
+                    }
+                
+            })}
+    
+    func fetchCityAndCountry(from location: CLLocation, completion: @escaping (_ city: String?, _ country:  String?, _ error: Error?) -> ()) {
+        CLGeocoder().reverseGeocodeLocation(location) { placemarks, error in
+            completion(placemarks?.first?.locality,
+                       placemarks?.first?.country,
+                       error)
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let location: CLLocation = manager.location else { return }
+        guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
+        print("locations = \(locValue.latitude) \(locValue.longitude)")
+        viewModel.locationToUse = String(String(locValue.latitude) + "," + String(locValue.longitude))
+        viewModel.getLocationSubject.onNext(false)
+        fetchCityAndCountry(from: location) { city, country, error in
+            guard let city = city, let country = country, error == nil else { return }
+            print(city + ", " + country)
+            self.viewModel.locationsData = LocationsObject(placeName: city, countryCode: Locale.current.regionCode ?? country, lng: locValue.longitude, lat: locValue.latitude, isSelected: true)
+            self.viewModel.firstLoadOfRealm.onNext(true)
+            self.viewModel.getDataSubject.onNext(self.viewModel.locationToUse)
+            self.viewModel.addLocationToRealmSubject.onNext(true)
+        }
+    }
+    
+    
     func setupSearchBar() {
         let searchTextField:UITextField = searchBar.subviews[0].subviews.last as! UITextField
         searchTextField.layer.cornerRadius = 15
@@ -455,7 +505,7 @@ class MainViewController: UIViewController, UISearchBarDelegate{
         checkSettings()
         currentTemperatureLabel.text = String(Int(weatherData.temperature)) + "°"
         currentSummaryLabel.text = weatherData.summary
-        location.text = locationText
+        location.text = viewModel.locationsData.placeName
         humidityLabel.text = String(Int(weatherData.humidity * 100)) + " %"
         windLabel.text = String((weatherData.windSpeed * 10).rounded()/10) + speedUnit
         pressureLabel.text = String(Int(weatherData.pressure)) + " hpa"
@@ -567,6 +617,7 @@ class MainViewController: UIViewController, UISearchBarDelegate{
                 case .dataForMainDone:
                     self.setupData()
                     self.removeSpinner()
+                    self.viewModel.addLocationToRealmSubject.onNext(true)
                 case .dataNotReady:
                      self.showSpinner(onView: self.view)
                 case .dataFromSearchDone:
@@ -576,6 +627,8 @@ class MainViewController: UIViewController, UISearchBarDelegate{
                     self.dataIsDoneLoading.didLoadData()
                     self.setupData()
                     self.removeSpinner()
+                    self.viewModel.addLocationToRealmSubject.onNext(true)
+                    self.viewModel.firstLoadOfRealm.onNext(true)
                 }
                 
             })
@@ -616,16 +669,22 @@ extension MainViewController: hideKeyboard {
 }
 
 extension MainViewController: ChangeLocationBasedOnSelection{
-    func didSelectLocation(long: Double, lat: Double, location: String) {
+    func didSelectLocation(long: Double, lat: Double, location: String, countryc: String) {
         viewModel.isDownloadingFromSearch = true
-        viewModel.locationToUse = String(String(long) + "," + String(String(lat)))
-        viewModel.getDataSubject.onNext(viewModel.locationToUse)
-        self.locationText = location
+        
+        let location = CLLocation(latitude: lat, longitude: long)
+        fetchCityAndCountry(from: location) { city, country, error in
+            guard let city = city, let country = country, error == nil else { return }
+            self.viewModel.locationToUse = String(String(lat) + "," + String(String(long)))
+            self.viewModel.locationsData = LocationsObject(placeName: city, countryCode: countryc, lng: long, lat: lat, isSelected: true)
+            self.viewModel.getDataSubject.onNext(self.viewModel.locationToUse)
+        }
     }
 }
 
 extension MainViewController: DoneButtonIsPressedDelegate {
-    func close(settings: SettingsScreenObject) {
+    func close(settings: SettingsScreenObject, location: LocationsObject) {
+        viewModel.locationsData = location
         viewModel.settingsObjects = settings
         checkForChangesInUnits()
         viewModel.loadSettingSubject.onNext(true)

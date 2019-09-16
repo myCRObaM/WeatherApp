@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 protocol ChangeLocationBasedOnSelection {
-    func didSelectLocation(long: Double, lat: Double, location: String)
+    func didSelectLocation(long: Double, lat: Double, location: String, countryc: String)
 }
 protocol SearchScreenDelegate {
     func openSearchScreen(searchBar: UISearchBar, rootController: MainViewController)
