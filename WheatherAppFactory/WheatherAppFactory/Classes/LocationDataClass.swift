@@ -8,12 +8,12 @@
 
 import Foundation
 class LocationDataClass: Decodable {
-    let postalcodes: [PostalCodes]
+    let geonames: [PostalCodes]
 }
 
 struct PostalCodes: Decodable {
-    let placeName: String
+    let name: String
     let countryCode: String
-    let lng: Double
-    let lat: Double
+    let lng: String
+    let lat: String
 }

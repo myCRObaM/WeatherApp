@@ -28,7 +28,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if viewModel.locationData.count != 0 {
-            return viewModel.locationData[0].postalcodes.count
+            return viewModel.locationData[0].geonames.count
         }
         else {
             return 0
@@ -36,7 +36,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let dataForCellSetup = viewModel.locationData[0].postalcodes[indexPath.row]
+        let dataForCellSetup = viewModel.locationData[0].geonames[indexPath.row]
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "cellID", for: indexPath) as? LocationTableViewCell else {
             fatalError("nije settano")
             
@@ -49,9 +49,9 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let data = viewModel.locationData[0].postalcodes[indexPath.row]
+        let data = viewModel.locationData[0].geonames[indexPath.row]
         showSpinner(onView: self.view)
-        selectedLocationButton.didSelectLocation(long: data.lng, lat: data.lat, location: data.placeName, countryc: data.countryCode)
+        selectedLocationButton.didSelectLocation(long: Double(data.lng)!, lat: Double(data.lat)!, location: data.name, countryc: data.countryCode)
     }
     
     let searchView: UIView = {

@@ -65,9 +65,9 @@ class LocationSettingsTableViewCell: UITableViewCell {
     
     func setupCell(data: PostalCodes){
         localData = data
-        locationLabel.text = data.placeName + ", " + data.countryCode
+        locationLabel.text = data.name + ", " + data.countryCode
     }
     @objc func deletePressed(){
-        deleteButtonPressed.deletePressed(name: localData.placeName)
+        deleteButtonPressed.deletePressed(name: localData.name)
     }
 }

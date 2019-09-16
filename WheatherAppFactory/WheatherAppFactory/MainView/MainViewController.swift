@@ -28,6 +28,51 @@ class MainViewController: UIViewController, UISearchBarDelegate, CLLocationManag
     let locationManager = CLLocationManager()
     
     
+    
+    func fetchCityAndCountry(from location: CLLocation, completion: @escaping (_ city: String?, _ country:  String?, _ error: Error?) -> ()) {
+        CLGeocoder().reverseGeocodeLocation(location) { placemarks, error in
+            completion(placemarks?.first?.locality,
+                       placemarks?.first?.country,
+                       error)
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let location: CLLocation = manager.location else { return }
+        guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
+        print("locations = \(locValue.latitude) \(locValue.longitude)")
+        viewModel.locationToUse = String(String(locValue.latitude) + "," + String(locValue.longitude))
+        viewModel.getLocationSubject.onNext(false)
+        fetchCityAndCountry(from: location) { city, country, error in
+            guard let city = city, let country = country, error == nil else { return }
+            print(city + ", " + country)
+            self.viewModel.locationsData = LocationsObject(placeName: city, countryCode: Locale.current.regionCode ?? country, lng: locValue.longitude, lat: locValue.latitude, isSelected: true)
+            self.viewModel.firstLoadOfRealm.onNext(true)
+            self.viewModel.getDataSubject.onNext(self.viewModel.locationToUse)
+        }
+    }
+    
+    
+    func setupSearchBar() {
+        let searchTextField:UITextField = customView.searchBar.subviews[0].subviews.last as! UITextField
+        searchTextField.layer.cornerRadius = 15
+        searchTextField.textAlignment = NSTextAlignment.left
+        let image:UIImage = UIImage(named: "search_icon")!
+        let imageView:UIImageView = UIImageView.init(image: image)
+        searchTextField.leftView = nil
+        searchTextField.placeholder = "Search"
+        searchTextField.rightView = imageView
+        imageView.image = imageView.image?.withRenderingMode(.alwaysTemplate)
+        imageView.tintColor = UIColor(hex: "#6DA133")
+        if let backgroundview = searchTextField.subviews.first {
+            backgroundview.layer.cornerRadius = 18;
+            backgroundview.clipsToBounds = true;
+        }
+        searchTextField.rightViewMode = UITextField.ViewMode.always
+    }
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
@@ -59,16 +104,28 @@ class MainViewController: UIViewController, UISearchBarDelegate, CLLocationManag
     }
     
     func setupConstraints() {
+        
         NSLayoutConstraint.activate([
             customView.topAnchor.constraint(equalTo: view.topAnchor),
             customView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             customView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             customView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
             ])
-        
-        
         setupSearchBarConstraints()
     }
+    
+    func setupSearchBarConstraints(){
+        customView.searchBar.delegate = self
+        searchBarCenterY = NSLayoutConstraint(item: customView.searchBar, attribute: .centerY, relatedBy: .equal, toItem: customView.settingsImage, attribute: .centerY, multiplier: 1, constant: 0)
+        NSLayoutConstraint.activate([
+            customView.searchBar.heightAnchor.constraint(equalToConstant: 70),
+            customView.searchBar.leadingAnchor.constraint(equalTo: customView.settingsImage.trailingAnchor, constant: 10),
+            customView.searchBar.trailingAnchor.constraint(equalTo: customView.trailingAnchor, constant: -10)
+            ])
+        view.addConstraint(searchBarCenterY)
+        
+    }
+    
     
     func checkSettings(){
         if viewModel.settingsObjects.humidityIsSelected {
@@ -143,47 +200,6 @@ class MainViewController: UIViewController, UISearchBarDelegate, CLLocationManag
                 
             })}
     
-    func fetchCityAndCountry(from location: CLLocation, completion: @escaping (_ city: String?, _ country:  String?, _ error: Error?) -> ()) {
-        CLGeocoder().reverseGeocodeLocation(location) { placemarks, error in
-            completion(placemarks?.first?.locality,
-                       placemarks?.first?.country,
-                       error)
-        }
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let location: CLLocation = manager.location else { return }
-        guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
-        print("locations = \(locValue.latitude) \(locValue.longitude)")
-        viewModel.locationToUse = String(String(locValue.latitude) + "," + String(locValue.longitude))
-        viewModel.getLocationSubject.onNext(false)
-        fetchCityAndCountry(from: location) { city, country, error in
-            guard let city = city, let country = country, error == nil else { return }
-            print(city + ", " + country)
-            self.viewModel.locationsData = LocationsObject(placeName: city, countryCode: Locale.current.regionCode ?? country, lng: locValue.longitude, lat: locValue.latitude, isSelected: true)
-            self.viewModel.firstLoadOfRealm.onNext(true)
-            self.viewModel.getDataSubject.onNext(self.viewModel.locationToUse)
-        }
-    }
-    
-    
-    func setupSearchBar() {
-        let searchTextField:UITextField = customView.searchBar.subviews[0].subviews.last as! UITextField
-        searchTextField.layer.cornerRadius = 15
-        searchTextField.textAlignment = NSTextAlignment.left
-        let image:UIImage = UIImage(named: "search_icon")!
-        let imageView:UIImageView = UIImageView.init(image: image)
-        searchTextField.leftView = nil
-        searchTextField.placeholder = "Search"
-        searchTextField.rightView = imageView
-        imageView.image = imageView.image?.withRenderingMode(.alwaysTemplate)
-        imageView.tintColor = UIColor(hex: "#6DA133")
-        if let backgroundview = searchTextField.subviews.first {
-            backgroundview.layer.cornerRadius = 18;
-            backgroundview.clipsToBounds = true;
-        }
-        searchTextField.rightViewMode = UITextField.ViewMode.always
-    }
     func setupData(){
         
         let weatherData = viewModel.mainWeatherData.currently
@@ -260,6 +276,8 @@ class MainViewController: UIViewController, UISearchBarDelegate, CLLocationManag
         
         customView.gradientView.setupUI(gradientLocal)
     }
+    
+    
     func setupLowAndHighTemperatures(_ data: MainDataClass){
         let calendar = Calendar.current
         let currentDay = calendar.component(.day, from: NSDate(timeIntervalSince1970: Double(data.currently.time)) as Date)
@@ -272,30 +290,7 @@ class MainViewController: UIViewController, UISearchBarDelegate, CLLocationManag
             }
         }
     }
-    func setupSearchBarConstraints(){
-        customView.searchBar.delegate = self
-        searchBarCenterY = NSLayoutConstraint(item: customView.searchBar, attribute: .centerY, relatedBy: .equal, toItem: customView.settingsImage, attribute: .centerY, multiplier: 1, constant: 0)
-        NSLayoutConstraint.activate([
-            customView.searchBar.heightAnchor.constraint(equalToConstant: 70),
-            customView.searchBar.leadingAnchor.constraint(equalTo: customView.settingsImage.trailingAnchor, constant: 10),
-            customView.searchBar.trailingAnchor.constraint(equalTo: customView.trailingAnchor, constant: -10)
-            ])
-        view.addConstraint(searchBarCenterY)
-
-    }
     
-    @objc func settingPressed(){
-        openSettingScreenDelegate.buttonPressed(rootController: self)
-    }
-    
-    func searchBarPressed(){
-        openSearchScreenDelegate.openSearchScreen(searchBar: customView.searchBar, rootController: self)
-    }
-    
-    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
-        searchBarPressed()
-        return false
-    }
     
     func spinnerControl(subject: PublishSubject<DataDoneEnum>) -> Disposable{
         return subject
@@ -308,7 +303,7 @@ class MainViewController: UIViewController, UISearchBarDelegate, CLLocationManag
                     self.removeSpinner()
                     self.viewModel.addLocationToRealmSubject.onNext(true)
                 case .dataNotReady:
-                     self.showSpinner(onView: self.view)
+                    self.showSpinner(onView: self.view)
                 case .dataFromSearchDone:
                     self.view.addSubview(self.customView.searchBar)
                     self.setupSearchBarConstraints()
@@ -350,6 +345,20 @@ class MainViewController: UIViewController, UISearchBarDelegate, CLLocationManag
         self.customView.searchBar.text = ""
     }
     
+    
+    @objc func settingPressed(){
+        openSettingScreenDelegate.buttonPressed(rootController: self)
+    }
+    
+    func searchBarPressed(){
+        openSearchScreenDelegate.openSearchScreen(searchBar: customView.searchBar, rootController: self)
+    }
+    
+    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
+        searchBarPressed()
+        return false
+    }
+    
 }
 extension MainViewController: hideKeyboard {
     func hideViewController() {
@@ -366,6 +375,7 @@ extension MainViewController: ChangeLocationBasedOnSelection{
             guard let city = city, let _ = country, error == nil else { return }
             self.viewModel.locationToUse = String(String(lat) + "," + String(String(long)))
             self.viewModel.locationsData = LocationsObject(placeName: city, countryCode: countryc, lng: long, lat: lat, isSelected: true)
+            self.viewModel.settingsObjects = SettingsScreenObject(metricSelected: true, humidityIsSelected: true, windIsSelected: true, pressureIsSelected: true, lastSelectedLocation: self.viewModel.locationsData.placeName)
             self.viewModel.getDataSubject.onNext(self.viewModel.locationToUse)
         }
     }

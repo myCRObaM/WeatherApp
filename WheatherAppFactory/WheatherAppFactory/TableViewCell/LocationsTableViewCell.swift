@@ -61,7 +61,7 @@ class LocationTableViewCell: UITableViewCell {
     }
     
     func setupCell(data: PostalCodes){
-        locationLabel.text = data.placeName + ", " + data.countryCode
-        textImageView.text = String(data.placeName.prefix(1).uppercased())
+        locationLabel.text = data.name + ", " + data.countryCode
+        textImageView.text = String(data.name.prefix(1).uppercased())
     }
 }

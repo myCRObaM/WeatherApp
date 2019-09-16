@@ -33,7 +33,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             fatalError("nije settano")
             
         }
-        cell.setupCell(data: PostalCodes(placeName: dataToUse.placeName, countryCode: dataToUse.countryCode, lng: dataToUse.lng, lat: dataToUse.lat))
+        cell.setupCell(data: PostalCodes(name: dataToUse.placeName, countryCode: dataToUse.countryCode, lng: String(dataToUse.lng), lat: String(dataToUse.lat)))
         cell.deleteButtonPressed = self
         cell.backgroundColor = .clear
         cell.selectionStyle = .default

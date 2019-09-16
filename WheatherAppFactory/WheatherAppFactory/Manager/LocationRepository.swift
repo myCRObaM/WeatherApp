@@ -10,12 +10,13 @@ import Foundation
 import RxSwift
 
 class LocationRepository {
+    let turl = "http://api.geonames.org/searchJSON?q="
     let url = "http://api.geonames.org/postalCodeLookupJSON?placename="
-    let username = "&username=myCRObaM"
+    let username = "&maxRows=10&username=myCRObaM"
     
     func alamofireRequest(_ location: String) -> Observable<LocationDataClass> {
         let alamofireManager = AlamofireManager()
-        let currentURL = url + location + username
+        let currentURL = turl + location + username
         return alamofireManager.requestLocation(url: currentURL)
     }
 }

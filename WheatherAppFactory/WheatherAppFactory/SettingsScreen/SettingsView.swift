@@ -295,7 +295,7 @@ class SettingsView: UIView {
             tableView.topAnchor.constraint(equalTo: locationLabel.bottomAnchor, constant: self.bounds.height/30),
             tableView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            tableView.heightAnchor.constraint(equalToConstant: self.bounds.height/6.74)
+            tableView.heightAnchor.constraint(equalToConstant: self.bounds.height/6)
             ])
         
         NSLayoutConstraint.activate([

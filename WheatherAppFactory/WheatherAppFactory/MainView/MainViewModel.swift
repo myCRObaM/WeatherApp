@@ -60,7 +60,7 @@ class MainViewModel {
             .subscribeOn(scheduler)
             .subscribe(onNext: {[unowned self]  objects in
                 if objects.count == 0 {
-                    self.getLocationSubject.onNext(true)
+                    self.setupCurrentLocationSubject.onNext(true)
                 }
                 if self.settingsObjects != nil && objects.count != 0{
                     self.setupCurrentLocationSubject.onNext(true)
@@ -130,15 +130,17 @@ class MainViewModel {
                 if object.count == 0 {
                     self.getLocationSubject.onNext(true)
                 }
-                for location in object {
-                    if location.placeName == self.settingsObjects.lastSelectedLocation {
-                        self.locationsData = location
+                else {
+                    for location in object {
+                        if location.placeName == self.settingsObjects.lastSelectedLocation {
+                            self.locationsData = location
+                        }
                     }
+                    self.getDataSubject.onNext(self.locationToUse)
                 }
+                
             })
             .subscribe(onNext: {objects in
-                self.locationToUse = String(String(self.locationsData.lat) + "," + String(String(self.locationsData.lng)))
-                self.getDataSubject.onNext(self.locationToUse)
             })
         
         

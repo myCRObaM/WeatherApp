@@ -1,204 +1,205 @@
 {
-    "postalcodes": [
+    "totalResultsCount": 251,
+    "geonames": [
         {
-            "adminName3": "Virovitica",
             "adminCode1": "17",
-            "lng": 17.40629,
+            "lng": "17.38389",
+            "geonameId": 3187694,
+            "toponymName": "Virovitica",
+            "countryId": "3202326",
+            "fcl": "P",
+            "population": 15665,
             "countryCode": "HR",
-            "postalcode": "33000",
-            "adminName1": "Virovitičko-Podravska",
-            "placeName": "Brezik",
-            "lat": 45.86407
+            "name": "Virovitica",
+            "fclName": "city, village,...",
+            "adminCodes1": {
+                "ISO3166_2": "10"
+            },
+            "countryName": "Croatia",
+            "fcodeName": "seat of a first-order administrative division",
+            "adminName1": "Virovitičk-Podravska",
+            "lat": "45.83194",
+            "fcode": "PPLA"
         },
         {
-            "adminName3": "Virovitica",
             "adminCode1": "17",
-            "lng": 17.4833333,
+            "lng": "17.58333",
+            "geonameId": 3337533,
+            "toponymName": "Virovitičko-Podravska Županija",
+            "countryId": "3202326",
+            "fcl": "A",
+            "population": 84836,
             "countryCode": "HR",
-            "postalcode": "33000",
-            "adminName1": "Virovitičko-Podravska",
-            "placeName": "Budrovac Lukački",
-            "lat": 45.8833333
+            "name": "Virovitičko-Podravska Županija",
+            "fclName": "country, state, region,...",
+            "adminCodes1": {
+                "ISO3166_2": "10"
+            },
+            "countryName": "Croatia",
+            "fcodeName": "first-order administrative division",
+            "adminName1": "Virovitičk-Podravska",
+            "lat": "45.75",
+            "fcode": "ADM1"
         },
         {
-            "adminName3": "Virovitica",
             "adminCode1": "17",
-            "lng": 17.3555556,
+            "lng": "17.38483",
+            "geonameId": 3187693,
+            "toponymName": "Grad Virovitica",
+            "countryId": "3202326",
+            "fcl": "A",
+            "population": 21291,
             "countryCode": "HR",
-            "postalcode": "33000",
-            "adminName1": "Virovitičko-Podravska",
-            "placeName": "Bušetina",
-            "lat": 45.8969444
+            "name": "Grad Virovitica",
+            "fclName": "country, state, region,...",
+            "adminCodes1": {
+                "ISO3166_2": "10"
+            },
+            "countryName": "Croatia",
+            "fcodeName": "second-order administrative division",
+            "adminName1": "Virovitičk-Podravska",
+            "lat": "45.83167",
+            "fcode": "ADM2"
         },
         {
-            "adminName3": "Virovitica",
             "adminCode1": "17",
-            "lng": 17.4505556,
+            "lng": "17.38694",
+            "geonameId": 3339295,
+            "toponymName": "Milanovac",
+            "countryId": "3202326",
+            "fcl": "P",
+            "population": 0,
             "countryCode": "HR",
-            "postalcode": "33000",
-            "adminName1": "Virovitičko-Podravska",
-            "placeName": "Dugo Selo Lukačko",
-            "lat": 45.8636111
+            "name": "Milanovac",
+            "fclName": "city, village,...",
+            "adminCodes1": {
+                "ISO3166_2": "10"
+            },
+            "countryName": "Croatia",
+            "fcodeName": "populated place",
+            "adminName1": "Virovitičk-Podravska",
+            "lat": "45.79972",
+            "fcode": "PPL"
         },
         {
-            "adminName3": "Virovitica",
             "adminCode1": "17",
-            "lng": 17.389585670588232,
+            "lng": "17.9",
+            "geonameId": 3194063,
+            "toponymName": "Grad Orahovica",
+            "countryId": "3202326",
+            "fcl": "A",
+            "population": 5304,
             "countryCode": "HR",
-            "postalcode": "33000",
-            "adminName1": "Virovitičko-Podravska",
-            "placeName": "Golo Brdo",
-            "lat": 45.861415864705876
+            "name": "Grad Orahovica",
+            "fclName": "country, state, region,...",
+            "adminCodes1": {
+                "ISO3166_2": "10"
+            },
+            "countryName": "Croatia",
+            "fcodeName": "second-order administrative division",
+            "adminName1": "Virovitičk-Podravska",
+            "lat": "45.53333",
+            "fcode": "ADM2"
         },
         {
-            "adminName3": "Virovitica",
             "adminCode1": "17",
-            "lng": 17.4427778,
+            "lng": "17.93879",
+            "geonameId": 11049455,
+            "toponymName": "Crnac",
+            "countryId": "3202326",
+            "fcl": "A",
+            "population": 1456,
             "countryCode": "HR",
-            "postalcode": "33000",
-            "adminName1": "Virovitičko-Podravska",
-            "placeName": "Gornje Bazje",
-            "lat": 45.91
+            "name": "Crnac",
+            "fclName": "country, state, region,...",
+            "adminCodes1": {
+                "ISO3166_2": "10"
+            },
+            "countryName": "Croatia",
+            "fcodeName": "second-order administrative division",
+            "adminName1": "Virovitičk-Podravska",
+            "lat": "45.69207",
+            "fcode": "ADM2"
         },
         {
-            "adminName3": "Virovitica",
             "adminCode1": "17",
-            "lng": 17.4105556,
+            "lng": "17.87377",
+            "geonameId": 11049456,
+            "toponymName": "Čačinci",
+            "countryId": "3202326",
+            "fcl": "A",
+            "population": 2802,
             "countryCode": "HR",
-            "postalcode": "33000",
-            "adminName1": "Virovitičko-Podravska",
-            "placeName": "Jasenaš",
-            "lat": 45.7272222
+            "name": "Čačinci",
+            "fclName": "country, state, region,...",
+            "adminCodes1": {
+                "ISO3166_2": "10"
+            },
+            "countryName": "Croatia",
+            "fcodeName": "second-order administrative division",
+            "adminName1": "Virovitičk-Podravska",
+            "lat": "45.60004",
+            "fcode": "ADM2"
         },
         {
-            "adminName3": "Virovitica",
             "adminCode1": "17",
-            "lng": 17.389585670588232,
+            "lng": "17.85562",
+            "geonameId": 11049457,
+            "toponymName": "Čađavica",
+            "countryId": "3202326",
+            "fcl": "A",
+            "population": 2009,
             "countryCode": "HR",
-            "postalcode": "33000",
-            "adminName1": "Virovitičko-Podravska",
-            "placeName": "Kapela Dvor",
-            "lat": 45.861415864705876
+            "name": "Čađavica",
+            "fclName": "country, state, region,...",
+            "adminCodes1": {
+                "ISO3166_2": "10"
+            },
+            "countryName": "Croatia",
+            "fcodeName": "second-order administrative division",
+            "adminName1": "Virovitičk-Podravska",
+            "lat": "45.74278",
+            "fcode": "ADM2"
         },
         {
-            "adminName3": "Virovitica",
             "adminCode1": "17",
-            "lng": 17.389585670588232,
+            "lng": "17.41938",
+            "geonameId": 11049462,
+            "toponymName": "Lukač",
+            "countryId": "3202326",
+            "fcl": "A",
+            "population": 3634,
             "countryCode": "HR",
-            "postalcode": "33000",
-            "adminName1": "Virovitičko-Podravska",
-            "placeName": "Katinka",
-            "lat": 45.861415864705876
+            "name": "Lukač",
+            "fclName": "country, state, region,...",
+            "adminCodes1": {
+                "ISO3166_2": "10"
+            },
+            "countryName": "Croatia",
+            "fcodeName": "second-order administrative division",
+            "adminName1": "Virovitičk-Podravska",
+            "lat": "45.87407",
+            "fcode": "ADM2"
         },
         {
-            "adminName3": "Virovitica",
             "adminCode1": "17",
-            "lng": 17.389585670588232,
+            "lng": "17.80837",
+            "geonameId": 11049464,
+            "toponymName": "Mikleuš",
+            "countryId": "3202326",
+            "fcl": "A",
+            "population": 1464,
             "countryCode": "HR",
-            "postalcode": "33000",
-            "adminName1": "Virovitičko-Podravska",
-            "placeName": "Korija",
-            "lat": 45.861415864705876
-        },
-        {
-            "adminName3": "Virovitica",
-            "adminCode1": "17",
-            "lng": 17.29,
-            "countryCode": "HR",
-            "postalcode": "33000",
-            "adminName1": "Virovitičko-Podravska",
-            "placeName": "Lozan",
-            "lat": 45.8913889
-        },
-        {
-            "adminName3": "Virovitica",
-            "adminCode1": "17",
-            "lng": 17.419444,
-            "countryCode": "HR",
-            "postalcode": "33000",
-            "adminName1": "Virovitičko-Podravska",
-            "placeName": "Lukač",
-            "lat": 45.8725
-        },
-        {
-            "adminName3": "Virovitica",
-            "adminCode1": "17",
-            "lng": 17.3869444,
-            "countryCode": "HR",
-            "postalcode": "33000",
-            "adminName1": "Virovitičko-Podravska",
-            "placeName": "Milanovac",
-            "lat": 45.7997222
-        },
-        {
-            "adminName3": "Virovitica",
-            "adminCode1": "17",
-            "lng": 17.389585670588232,
-            "countryCode": "HR",
-            "postalcode": "33000",
-            "adminName1": "Virovitičko-Podravska",
-            "placeName": "Novi Antunovac",
-            "lat": 45.861415864705876
-        },
-        {
-            "adminName3": "Virovitica",
-            "adminCode1": "17",
-            "lng": 17.3663889,
-            "countryCode": "HR",
-            "postalcode": "33000",
-            "adminName1": "Virovitičko-Podravska",
-            "placeName": "Okrugljača",
-            "lat": 45.9272222
-        },
-        {
-            "adminName3": "Virovitica",
-            "adminCode1": "17",
-            "lng": 17.389585670588232,
-            "countryCode": "HR",
-            "postalcode": "33000",
-            "adminName1": "Virovitičko-Podravska",
-            "placeName": "Podgorje",
-            "lat": 45.861415864705876
-        },
-        {
-            "adminName3": "Virovitica",
-            "adminCode1": "17",
-            "lng": 17.4166667,
-            "countryCode": "HR",
-            "postalcode": "33000",
-            "adminName1": "Virovitičko-Podravska",
-            "placeName": "Rezovac",
-            "lat": 45.7833333
-        },
-        {
-            "adminName3": "Virovitica",
-            "adminCode1": "17",
-            "lng": 17.4166667,
-            "countryCode": "HR",
-            "postalcode": "33000",
-            "adminName1": "Virovitičko-Podravska",
-            "placeName": "Rezovačke Krčevine",
-            "lat": 45.7833333
-        },
-        {
-            "adminName3": "Virovitica",
-            "adminCode1": "17",
-            "lng": 17.389585670588232,
-            "countryCode": "HR",
-            "postalcode": "33000",
-            "adminName1": "Virovitičko-Podravska",
-            "placeName": "Rit",
-            "lat": 45.861415864705876
-        },
-        {
-            "adminName3": "Virovitica",
-            "adminCode1": "17",
-            "lng": 17.3072222,
-            "countryCode": "HR",
-            "postalcode": "33000",
-            "adminName1": "Virovitičko-Podravska",
-            "placeName": "Rogovac",
-            "lat": 45.9033333
+            "name": "Mikleuš",
+            "fclName": "country, state, region,...",
+            "adminCodes1": {
+                "ISO3166_2": "10"
+            },
+            "countryName": "Croatia",
+            "fcodeName": "second-order administrative division",
+            "adminName1": "Virovitičk-Podravska",
+            "lat": "45.61421",
+            "fcode": "ADM2"
         }
     ]
 }
