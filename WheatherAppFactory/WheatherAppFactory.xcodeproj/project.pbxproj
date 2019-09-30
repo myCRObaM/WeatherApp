@@ -17,13 +17,13 @@
 		F00821F9232B832C006CEA6F /* SettingsScreenClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00821F8232B832C006CEA6F /* SettingsScreenClass.swift */; };
 		F00821FB232B8B61006CEA6F /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00821FA232B8B61006CEA6F /* RealmManager.swift */; };
 		F00821FD232BAC57006CEA6F /* DoneButtonIsPressedDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00821FC232BAC57006CEA6F /* DoneButtonIsPressedDelegate.swift */; };
+		F02F4A382341CDF800198858 /* GothamRounded-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = F02F4A372341CDF800198858 /* GothamRounded-Light.otf */; };
+		F02F4A3A2341CDFD00198858 /* GothamRounded-Book.otf in Resources */ = {isa = PBXBuildFile; fileRef = F02F4A392341CDFD00198858 /* GothamRounded-Book.otf */; };
 		F0B3410E2327B9750083FA5A /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B3410D2327B9750083FA5A /* Coordinator.swift */; };
 		F0B341102327BE090083FA5A /* MainViewCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B3410F2327BE090083FA5A /* MainViewCoordinator.swift */; };
 		F0B341122327C0E00083FA5A /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B341112327C0E00083FA5A /* MainViewModel.swift */; };
 		F0B341182327C5A10083FA5A /* MainDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B341172327C5A10083FA5A /* MainDataClass.swift */; };
 		F0B3411B2327CC660083FA5A /* WeatherRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B3411A2327CC660083FA5A /* WeatherRepository.swift */; };
-		F0B3411E2327D2730083FA5A /* GothamRounded-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = F0B3411D2327D2700083FA5A /* GothamRounded-Light.otf */; };
-		F0B341202327D2870083FA5A /* GothamRounded-Book.otf in Resources */ = {isa = PBXBuildFile; fileRef = F0B3411F2327D2870083FA5A /* GothamRounded-Book.otf */; };
 		F0B341222328CEE90083FA5A /* AlamofireManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B341212328CEE90083FA5A /* AlamofireManager.swift */; };
 		F0B341252328D3620083FA5A /* GeneratedMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B341242328D3620083FA5A /* GeneratedMocks.swift */; };
 		F0B341272328D3890083FA5A /* MainScreenTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B341262328D3890083FA5A /* MainScreenTest.swift */; };
@@ -82,13 +82,13 @@
 		F00821F8232B832C006CEA6F /* SettingsScreenClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsScreenClass.swift; sourceTree = "<group>"; };
 		F00821FA232B8B61006CEA6F /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
 		F00821FC232BAC57006CEA6F /* DoneButtonIsPressedDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoneButtonIsPressedDelegate.swift; sourceTree = "<group>"; };
+		F02F4A372341CDF800198858 /* GothamRounded-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GothamRounded-Light.otf"; sourceTree = "<group>"; };
+		F02F4A392341CDFD00198858 /* GothamRounded-Book.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GothamRounded-Book.otf"; sourceTree = "<group>"; };
 		F0B3410D2327B9750083FA5A /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		F0B3410F2327BE090083FA5A /* MainViewCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewCoordinator.swift; sourceTree = "<group>"; };
 		F0B341112327C0E00083FA5A /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		F0B341172327C5A10083FA5A /* MainDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainDataClass.swift; sourceTree = "<group>"; };
 		F0B3411A2327CC660083FA5A /* WeatherRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherRepository.swift; sourceTree = "<group>"; };
-		F0B3411D2327D2700083FA5A /* GothamRounded-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "GothamRounded-Light.otf"; path = "../../../../../../Downloads/gotham-rounded/GothamRounded-Light.otf"; sourceTree = "<group>"; };
-		F0B3411F2327D2870083FA5A /* GothamRounded-Book.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "GothamRounded-Book.otf"; path = "../../../../../../Downloads/gotham-rounded/GothamRounded-Book.otf"; sourceTree = "<group>"; };
 		F0B341212328CEE90083FA5A /* AlamofireManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlamofireManager.swift; sourceTree = "<group>"; };
 		F0B341242328D3620083FA5A /* GeneratedMocks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneratedMocks.swift; sourceTree = "<group>"; };
 		F0B341262328D3890083FA5A /* MainScreenTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenTest.swift; sourceTree = "<group>"; };
@@ -168,6 +168,13 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		F02F4A362341CDD300198858 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		F0B341132327C5610083FA5A /* Delegates */ = {
 			isa = PBXGroup;
 			children = (
@@ -222,8 +229,8 @@
 		F0B3411C2327D2270083FA5A /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
-				F0B3411D2327D2700083FA5A /* GothamRounded-Light.otf */,
-				F0B3411F2327D2870083FA5A /* GothamRounded-Book.otf */,
+				F02F4A392341CDFD00198858 /* GothamRounded-Book.otf */,
+				F02F4A372341CDF800198858 /* GothamRounded-Light.otf */,
 			);
 			path = Fonts;
 			sourceTree = "<group>";
@@ -294,6 +301,7 @@
 			isa = PBXGroup;
 			children = (
 				F0B3411C2327D2270083FA5A /* Fonts */,
+				F02F4A362341CDD300198858 /* Models */,
 				F0B3412F2328F40C0083FA5A /* Enum */,
 				F0B341162327C58E0083FA5A /* Classes */,
 				F0B341132327C5610083FA5A /* Delegates */,
@@ -442,9 +450,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F0B3411E2327D2730083FA5A /* GothamRounded-Light.otf in Resources */,
+				F02F4A382341CDF800198858 /* GothamRounded-Light.otf in Resources */,
 				F0EF43362327B6F900D2D1F7 /* LaunchScreen.storyboard in Resources */,
-				F0B341202327D2870083FA5A /* GothamRounded-Book.otf in Resources */,
+				F02F4A3A2341CDFD00198858 /* GothamRounded-Book.otf in Resources */,
 				F0EF43332327B6F900D2D1F7 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
