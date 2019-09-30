@@ -15,44 +15,17 @@ protocol hideViewController{
 }
 
 class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource  {
-    
+    //MARK: Variables
     let viewModel: SearchViewModel!
     let searchBar: UISearchBar!
-    var cancelButtonPressed: hideKeyboard!
+    weak var cancelButtonPressed: hideKeyboard!
     var keyboardHeight: CGFloat!
     var bottomConstraint: NSLayoutConstraint?
     let disposeBag = DisposeBag()
-    var selectedLocationButton: ChangeLocationBasedOnSelection!
+    weak var selectedLocationButton: ChangeLocationBasedOnSelection?
+    weak var coordinatorDelegate: CoordinatorDelegate?
     var vSpinner : UIView?
     
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if viewModel.locationData.count != 0 {
-            return viewModel.locationData[0].geonames.count
-        }
-        else {
-            return 0
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let dataForCellSetup = viewModel.locationData[0].geonames[indexPath.row]
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "cellID", for: indexPath) as? LocationTableViewCell else {
-            fatalError("nije settano")
-            
-        }
-        cell.setupCell(data: dataForCellSetup)
-        cell.backgroundColor = .clear
-        cell.selectionStyle = .none
-        
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let data = viewModel.locationData[0].geonames[indexPath.row]
-        showSpinner(onView: self.view)
-        selectedLocationButton.didSelectLocation(long: Double(data.lng)!, lat: Double(data.lat)!, location: data.name, countryc: data.countryCode)
-    }
     
     let searchView: UIView = {
         let view = UIView()
@@ -81,6 +54,37 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
         return imageView
     }()
     
+    //MARK: Table view setup
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if viewModel.locationData.count != 0 {
+            return viewModel.locationData[0].geonames.count
+        }
+        else {
+            return 0
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let dataForCellSetup = viewModel.locationData[0].geonames[indexPath.row]
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "cellID", for: indexPath) as? LocationTableViewCell else {
+            fatalError("nije settano")
+            
+        }
+        cell.setupCell(data: dataForCellSetup)
+        cell.backgroundColor = .clear
+        cell.selectionStyle = .none
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let data = viewModel.locationData[0].geonames[indexPath.row]
+        showSpinner(onView: self.view)
+        selectedLocationButton?.didSelectLocation(long: Double(data.lng)!, lat: Double(data.lat)!, location: data.name, countryc: data.countryCode)
+    }
+    
+    
+    //MARK: init
     init(model: SearchViewModel, searchBar: UISearchBar) {
         self.viewModel = model
         self.searchBar = searchBar
@@ -90,29 +94,34 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    
     override func viewWillAppear(_ animated: Bool) {
 
         super.viewWillAppear(animated)
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        coordinatorDelegate?.viewControllerHasFinished()
+        print("Deinit: \(self)")
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
-        searchBar.delegate = self
-        tableView.delegate = self
-        tableView.dataSource = self
-        
+        setupView()
         prepareForViewModel()
         bindTextFieldWithRx()
-        
-        setupView()
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.searchBar.becomeFirstResponder()
     }
+    
+    //MARK: Setup view
     func setupView(){
+        searchBar.delegate = self
+        tableView.delegate = self
+        tableView.dataSource = self
+        
         tableView.register(LocationTableViewCell.self, forCellReuseIdentifier: "cellID")
         
         let tap = UILongPressGestureRecognizer(target: self, action: #selector(screenPressed))
@@ -126,6 +135,8 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
         cancelButton.addTarget(self, action: #selector(screenPressed), for: .touchUpInside)
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         
         setupConstraints()
         
@@ -158,6 +169,26 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
             ])
         
     }
+    //MARK: Prepare for view model
+    func prepareForViewModel(){
+        let input = SearchViewModel.Input(getLocationSubject: PublishSubject<String>())
+        let output = viewModel.transform(input: input)
+        
+        for disposable in output.disposables {
+            disposable.disposed(by: disposeBag)
+        }
+        
+        viewModel.output.popUpSubject
+               .observeOn(MainScheduler.instance)
+               .subscribeOn(viewModel.dependencies.scheduler)
+               .subscribe(onNext: {[unowned self] bool in
+                       self.showPopUp()
+                   }).disposed(by: disposeBag)
+        
+        reloadTableViewData(subject: viewModel.output.dataDoneSubject).disposed(by: disposeBag)
+       }
+    
+    //MARK: Actions
     @objc func screenPressed(gesture: UITapGestureRecognizer){
         if gesture.state == .began {
             handleHidingViewController()
@@ -184,11 +215,9 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
             }
         }
     }
-    func prepareForViewModel(){
-        viewModel.getData(subject: viewModel.getLocationSubject).disposed(by: disposeBag)
-        reloadTableViewData(subject: viewModel.dataDoneSubject).disposed(by: disposeBag)
-    }
     
+   
+    //MARK: Bind textfield
     func bindTextFieldWithRx(){
         @discardableResult let _ = searchBar.rx.text.orEmpty
             .distinctUntilChanged()
@@ -200,18 +229,21 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
                 return value
             })
             .debounce(.milliseconds(300), scheduler: ConcurrentDispatchQueueScheduler(qos: .background))
-            .bind(to: viewModel.getLocationSubject)
+            .bind(to: viewModel.input.getLocationSubject)
     }
     
     func reloadTableViewData(subject: PublishSubject<Bool>) -> Disposable{
         return subject
             .observeOn(MainScheduler.instance)
-            .subscribeOn(viewModel.scheduler)
+            .subscribeOn(viewModel.dependencies.scheduler)
             .subscribe(onNext: {[unowned self]  article in
                 self.tableView.reloadData()
+            },  onError: {[unowned self] (error) in
+                self.viewModel.output!.popUpSubject.onNext(true)
+                    print(error)
             })
     }
-    
+    //MARK: Spinner
     func showSpinner(onView : UIView) {
         let spinnerView = UIView.init(frame: onView.bounds)
         spinnerView.backgroundColor = UIColor.init(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
@@ -233,8 +265,13 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
             self.vSpinner = nil
         }
     }
-    
-}
+    func showPopUp(){
+        let alert = UIAlertController(title: "Error", message: "Something went wrong.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction) in
+            alert.dismiss(animated: true, completion: nil)
+        }))
+        self.present(alert, animated: true)
+    }}
 extension SearchViewController: hideViewController {
     func didLoadData() {
         handleHidingViewController()

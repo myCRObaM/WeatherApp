@@ -13,24 +13,29 @@ import RxSwift
 class SearchViewCoordinator: Coordinator {
     var childCoordinators: [Coordinator] = []
     let rootController: MainViewController!
+    let viewController: SearchViewController
     let searchBar: UISearchBar!
     
     
     init(rootController: MainViewController, searchBar: UISearchBar) {
         self.rootController = rootController
         self.searchBar = searchBar
-    }
-    
-    func start() {
-        let viewModel = SearchViewModel(repository: LocationRepository(), scheduler: ConcurrentDispatchQueueScheduler(qos: .background))
-        let viewController = SearchViewController(model: viewModel, searchBar: searchBar)
+        
+        let viewModel = SearchViewModel(dependencies: SearchViewModel.Dependencies(repository: LocationRepository(), scheduler: ConcurrentDispatchQueueScheduler(qos: .background)))
+        self.viewController = SearchViewController(model: viewModel, searchBar: searchBar)
         viewController.cancelButtonPressed = rootController
         rootController.dataIsDoneLoading = viewController
         viewController.selectedLocationButton = rootController
+    }
+    
+    func start() {
         viewController.modalPresentationStyle = .overFullScreen
         rootController.present(viewController, animated: false) {
         }
         
+    }
+    deinit {
+        print("Deinit: \(self)")
     }
     
   

@@ -10,69 +10,41 @@ import UIKit
 import RxSwift
 import Hue
 import MapKit
-import CoreLocation
 
-class MainViewController: UIViewController, UISearchBarDelegate, CLLocationManagerDelegate{
+class MainViewController: UIViewController, UISearchBarDelegate{
     
     let viewModel: MainViewModel!
     let disposeBag = DisposeBag()
     var customView: MainView!
     
-    var tempUnits: String = "°C"
-    var speedUnit: String = "km/h"
     var searchBarCenterY: NSLayoutConstraint!
-    var openSearchScreenDelegate: SearchScreenDelegate!
-    var openSettingScreenDelegate: SettingsScreenDelegate!
+    weak var openSearchScreenDelegate: SearchScreenDelegate?
+    weak var openSettingScreenDelegate: SettingsScreenDelegate?
     var vSpinner : UIView?
     var dataIsDoneLoading: hideViewController!
-    let locationManager = CLLocationManager()
     
     
-    
-    func fetchCityAndCountry(from location: CLLocation, completion: @escaping (_ city: String?, _ country:  String?, _ error: Error?) -> ()) {
-        CLGeocoder().reverseGeocodeLocation(location) { placemarks, error in
-            completion(placemarks?.first?.locality,
-                       placemarks?.first?.country,
-                       error)
-        }
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let location: CLLocation = manager.location else { return }
-        guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
-        print("locations = \(locValue.latitude) \(locValue.longitude)")
-        viewModel.locationToUse = String(String(locValue.latitude) + "," + String(locValue.longitude))
-        viewModel.getLocationSubject.onNext(false)
-        fetchCityAndCountry(from: location) { city, country, error in
-            guard let city = city, let country = country, error == nil else { return }
-            print(city + ", " + country)
-            self.viewModel.locationsData = LocationsObject(placeName: city, countryCode: Locale.current.regionCode ?? country, lng: locValue.longitude, lat: locValue.latitude, isSelected: true)
-            self.viewModel.firstLoadOfRealm.onNext(true)
-            self.viewModel.getDataSubject.onNext(self.viewModel.locationToUse)
-        }
-    }
+//MARK: SearchBar
+  func setupSearchBar(){
+           let searchTextField = customView.searchBar.value(forKey: "searchField") as! UITextField
+           searchTextField.textAlignment = NSTextAlignment.left
+           let image:UIImage = UIImage(named: "search_icon")!
+           let imageView:UIImageView = UIImageView.init(image: image)
+           imageView.image = imageView.image?.withRenderingMode(.alwaysTemplate)
+           imageView.tintColor = UIColor(hex: "#6DA133")
+           searchTextField.leftView = nil
+           searchTextField.placeholder = "Search"
+           searchTextField.rightView = imageView
+           searchTextField.rightViewMode = UITextField.ViewMode.always
+           
+           if let backgroundview = searchTextField.subviews.first {
+               backgroundview.layer.cornerRadius = 18;
+               backgroundview.clipsToBounds = true;
+           }
+       }
     
     
-    func setupSearchBar() {
-        let searchTextField:UITextField = customView.searchBar.subviews[0].subviews.last as! UITextField
-        searchTextField.layer.cornerRadius = 15
-        searchTextField.textAlignment = NSTextAlignment.left
-        let image:UIImage = UIImage(named: "search_icon")!
-        let imageView:UIImageView = UIImageView.init(image: image)
-        searchTextField.leftView = nil
-        searchTextField.placeholder = "Search"
-        searchTextField.rightView = imageView
-        imageView.image = imageView.image?.withRenderingMode(.alwaysTemplate)
-        imageView.tintColor = UIColor(hex: "#6DA133")
-        if let backgroundview = searchTextField.subviews.first {
-            backgroundview.layer.cornerRadius = 18;
-            backgroundview.clipsToBounds = true;
-        }
-        searchTextField.rightViewMode = UITextField.ViewMode.always
-    }
-    
-    
-    
+    //MARK: viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
@@ -92,7 +64,7 @@ class MainViewController: UIViewController, UISearchBarDelegate, CLLocationManag
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+    //MARK: setupView
     func setupView(){
         
        customView = MainView(frame: view.frame)
@@ -126,7 +98,7 @@ class MainViewController: UIViewController, UISearchBarDelegate, CLLocationManag
         
     }
     
-    
+    //MARK: Setup view by settings
     func checkSettings(){
         if viewModel.settingsObjects.humidityIsSelected {
             setupHumidity()
@@ -149,7 +121,6 @@ class MainViewController: UIViewController, UISearchBarDelegate, CLLocationManag
             customView.moreInfoStackView.removeArrangedSubview(customView.pressureStackView)
             customView.pressureStackView.removeFromSuperview()
         }
-        checkForChangesInUnits()
     }
     
     func setupHumidity(){
@@ -171,137 +142,63 @@ class MainViewController: UIViewController, UISearchBarDelegate, CLLocationManag
         customView.moreInfoStackView.addArrangedSubview(customView.pressureStackView)
     }
     
+    //MARK: setupViewModel
     func setupViewModel(){
-        viewModel.getData(subject: viewModel.getDataSubject).disposed(by: disposeBag)
-        spinnerControl(subject: viewModel.dataIsDoneLoading).disposed(by: disposeBag)
-        viewModel.addObjectToRealm(subject: viewModel.firstLoadOfRealm).disposed(by: disposeBag)
-        viewModel.loadDataForScreen(subject: viewModel.loadSettingSubject).disposed(by: disposeBag)
-        viewModel.loadLocationsFromRealm(subject: viewModel!.setupCurrentLocationSubject).disposed(by: disposeBag)
-        locationManager.requestWhenInUseAuthorization()
-        viewModel.loadSettingSubject.onNext(true)
-        setupLocation(subject: viewModel.getLocationSubject).disposed(by: disposeBag)
-        viewModel.addLocationToRealm(subject: viewModel.addLocationToRealmSubject).disposed(by: disposeBag)
-    }
-    func setupLocation(subject: PublishSubject<Bool>) -> Disposable{
-        return subject
-            .observeOn(MainScheduler.instance)
-            .subscribeOn(viewModel.scheduler)
-            .subscribe(onNext: {[unowned self] bool in
-                switch bool{
-                case true:
-                    if CLLocationManager.locationServicesEnabled() {
-                        self.locationManager.delegate = self
-                        self.locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
-                        self.locationManager.startUpdatingLocation()
-                    }
-                case false:
-                        self.locationManager.stopUpdatingLocation()
-                    }
-                
-            })}
-    
-    func setupData(){
         
+        let output = viewModel.transform(input: MainViewModel.Input(getDataSubject: ReplaySubject<String>.create(bufferSize: 1), loadSettingSubject: ReplaySubject<Bool>.create(bufferSize: 1), firstLoadOfRealm: PublishSubject<Bool>(), getLocationSubject: PublishSubject<Bool>(), addLocationToRealmSubject: PublishSubject<Bool>(), setupCurrentLocationSubject: PublishSubject<Bool>()))
+        
+        for disposable in output.disposables {
+            disposable.disposed(by: disposeBag)
+        }
+        
+        viewModel.output?.popUpSubject
+        .observeOn(MainScheduler.instance)
+        .subscribeOn(viewModel.dependencies.scheduler)
+        .subscribe(onNext: {[unowned self] bool in
+                self.showPopUp()
+            }).disposed(by: disposeBag)
+
+        spinnerControl(subject: viewModel.output!.dataIsDoneLoading).disposed(by: disposeBag)
+        viewModel.locationManager.requestWhenInUseAuthorization()
+        viewModel.input!.loadSettingSubject.onNext(true)
+    }
+    
+   
+    //MARK: setupData
+    func setupData(){
+        let lowAndHighTemp = viewModel.setupLowAndHighTemperatures(viewModel.mainWeatherData)
         let weatherData = viewModel.mainWeatherData.currently
+        let imageExtension = weatherData.icon
+        
         checkSettings()
         customView.currentTemperatureLabel.text = String(Int(weatherData.temperature)) + "°"
         customView.currentSummaryLabel.text = weatherData.summary
         customView.location.text = viewModel.locationsData.placeName
         customView.humidityLabel.text = String(Int(weatherData.humidity * 100)) + " %"
-        customView.windLabel.text = String((weatherData.windSpeed * 10).rounded()/10) + speedUnit
+        customView.windLabel.text = lowAndHighTemp.speed
         customView.pressureLabel.text = String(Int(weatherData.pressure)) + " hpa"
         
-        let imageExtension = weatherData.icon
         customView.headerImage.image = UIImage(named: "header_image-\(imageExtension)")
         customView.mainBodyImage.image = UIImage(named: "body_image-\(imageExtension)")
-        setupGradient(weatherData)
+        customView.gradientView.setupUI(viewModel.setupGradient(weatherData))
         
-        setupLowAndHighTemperatures(viewModel.mainWeatherData)
+        customView.lowTemperatureLabel.text = lowAndHighTemp.lowTemp
+        customView.highTemperatureLabel.text = lowAndHighTemp.highTemp
         
         viewModel.isDownloadingFromSearch = false
-        
     }
     
-    func checkForChangesInUnits(){
-        if viewModel.settingsObjects.metricSelected {
-            viewModel.unitMode = "si"
-        } else {
-            viewModel.unitMode = "us"
-        }
-        
-        if viewModel.unitMode == "si" {
-            tempUnits = "°C"
-            speedUnit = "km/h"
-        }
-        else {
-            tempUnits = "°F"
-            speedUnit = "mph"
-        }
-    }
-    
-    func setupGradient(_ data: Currently){
-        var firstColor = UIColor(hex: "#15587B")
-        var secondColor = UIColor(hex: "#4A75A2")
-        if data.icon == "clear-day" || data.icon == "wind"  {
-            firstColor = UIColor(hex: "#59B7E0")
-            secondColor = UIColor(hex: "#D8D8D8")
-        }
-        else if data.icon == "clear-night" || data.icon == "partly-cloudy-night"{
-            firstColor = UIColor(hex: "#044663")
-            secondColor = UIColor(hex: "#234880")
-        }
-        else if data.icon == "rain" || data.icon == "cloudy" || data.icon == "thunderstorm" || data.icon == "tornado" || data.icon == "hail"{
-            firstColor = UIColor(hex: "#15587B")
-            secondColor = UIColor(hex: "#4A75A2")
-        }
-        else if data.icon == "snow" || data.icon == "sleet" {
-            firstColor = UIColor(hex: "#0B3A4E")
-            secondColor = UIColor(hex: "#80D5F3")
-        }
-        else if data.icon == "fog" || data.icon == "cloudy" || data.icon == "partly-cloudy-day" {
-            firstColor = UIColor(hex: "#ABD6E9")
-            secondColor = UIColor(hex: "#D8D8D8")
-        }
-        
-        
-        let gradientLocal: CAGradientLayer = {
-            let gradientLocal: CAGradientLayer = [
-                firstColor,
-                secondColor
-                ].gradient()
-            gradientLocal.startPoint = CGPoint(x: 0.5, y: 0)
-            gradientLocal.endPoint = CGPoint(x: 0.5, y: 0.98)
-            return gradientLocal
-        }()
-        
-        customView.gradientView.setupUI(gradientLocal)
-    }
-    
-    
-    func setupLowAndHighTemperatures(_ data: MainDataClass){
-        let calendar = Calendar.current
-        let currentDay = calendar.component(.day, from: NSDate(timeIntervalSince1970: Double(data.currently.time)) as Date)
-        
-        for day in data.daily.data {
-            let searchDay = calendar.component(.day, from: NSDate(timeIntervalSince1970: Double(day.time)) as Date)
-            if currentDay == searchDay {
-                self.customView.lowTemperatureLabel.text = String((day.temperatureMin * 10).rounded() / 10) + tempUnits
-                self.customView.highTemperatureLabel.text = String((day.temperatureMax * 10).rounded() / 10) + tempUnits
-            }
-        }
-    }
-    
-    
+    //MARK: Spinner control
     func spinnerControl(subject: PublishSubject<DataDoneEnum>) -> Disposable{
         return subject
             .observeOn(MainScheduler.instance)
-            .subscribeOn(viewModel.scheduler)
+            .subscribeOn(viewModel.dependencies.scheduler)
             .subscribe(onNext: {[unowned self] bool in
                 switch bool {
                 case .dataForMainDone:
                     self.setupData()
                     self.removeSpinner()
-                    self.viewModel.addLocationToRealmSubject.onNext(true)
+                    self.viewModel.input!.addLocationToRealmSubject.onNext(true)
                 case .dataNotReady:
                     self.showSpinner(onView: self.view)
                 case .dataFromSearchDone:
@@ -311,10 +208,13 @@ class MainViewController: UIViewController, UISearchBarDelegate, CLLocationManag
                     self.dataIsDoneLoading.didLoadData()
                     self.setupData()
                     self.removeSpinner()
-                    self.viewModel.addLocationToRealmSubject.onNext(true)
-                    self.viewModel.firstLoadOfRealm.onNext(true)
+                    self.viewModel.input!.addLocationToRealmSubject.onNext(true)
+                    self.viewModel.input!.firstLoadOfRealm.onNext(true)
                 }
                 
+            },  onError: {[unowned self] (error) in
+                self.viewModel.output!.popUpSubject.onNext(true)
+                    print(error)
             })
     }
     func showSpinner(onView : UIView) {
@@ -347,16 +247,24 @@ class MainViewController: UIViewController, UISearchBarDelegate, CLLocationManag
     
     
     @objc func settingPressed(){
-        openSettingScreenDelegate.buttonPressed(rootController: self)
+        openSettingScreenDelegate!.buttonPressed(rootController: self)
     }
     
     func searchBarPressed(){
-        openSearchScreenDelegate.openSearchScreen(searchBar: customView.searchBar, rootController: self)
+        openSearchScreenDelegate!.openSearchScreen(searchBar: customView.searchBar, rootController: self)
     }
     
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
         searchBarPressed()
         return false
+    }
+    //MARK: Popup
+    func showPopUp(){
+        let alert = UIAlertController(title: "Error", message: "Something went wrong.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction) in
+            alert.dismiss(animated: true, completion: nil)
+        }))
+        self.present(alert, animated: true)
     }
     
 }
@@ -371,12 +279,12 @@ extension MainViewController: ChangeLocationBasedOnSelection{
         viewModel.isDownloadingFromSearch = true
         
         let location = CLLocation(latitude: lat, longitude: long)
-        fetchCityAndCountry(from: location) { city, country, error in
+        viewModel.fetchCityAndCountry(from: location) { city, country, error in
             guard let city = city, let _ = country, error == nil else { return }
-            self.viewModel.locationToUse = String(String(lat) + "," + String(String(long)))
+            let locationToUse = String(lat) + "," + String(long)
             self.viewModel.locationsData = LocationsObject(placeName: city, countryCode: countryc, lng: long, lat: lat, isSelected: true)
             self.viewModel.settingsObjects = SettingsScreenObject(metricSelected: true, humidityIsSelected: true, windIsSelected: true, pressureIsSelected: true, lastSelectedLocation: self.viewModel.locationsData.placeName)
-            self.viewModel.getDataSubject.onNext(self.viewModel.locationToUse)
+            self.viewModel.input!.getDataSubject.onNext(locationToUse)
         }
     }
 }
@@ -385,7 +293,6 @@ extension MainViewController: DoneButtonIsPressedDelegate {
     func close(settings: SettingsScreenObject, location: LocationsObject) {
         viewModel.locationsData = location
         viewModel.settingsObjects = settings
-        checkForChangesInUnits()
-        viewModel.loadSettingSubject.onNext(true)
+        viewModel.input!.loadSettingSubject.onNext(true)
     }
 }

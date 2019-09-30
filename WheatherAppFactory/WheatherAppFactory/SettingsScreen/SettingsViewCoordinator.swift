@@ -13,20 +13,24 @@ import RxSwift
 class SettingsViewCoordinator: Coordinator {
     var childCoordinators: [Coordinator] = []
     let rootController: MainViewController!
+    let viewController: SettingsViewController
     
     init(rootController: MainViewController){
         self.rootController = rootController
+        let viewModel = SettingsScreenModel(dependencies: SettingsScreenModel.Dependencies(scheduler: ConcurrentDispatchQueueScheduler(qos: .background)), settings: rootController.viewModel.settingsObjects, location: rootController.viewModel.locationsData)
+        viewModel.doneButtonPressedDelegate = rootController
+        viewController = SettingsViewController(viewModel: viewModel)
+        viewController.doneButtonPressedDelegate = rootController
     }
     
     func start() {
-        let viewModel = SettingsScreenModel(scheduler: ConcurrentDispatchQueueScheduler(qos: .background), settings: rootController.viewModel.settingsObjects, location: rootController.viewModel.locationsData)
-        viewModel.doneButtonPressedDelegate = rootController
-        let settingsVC = SettingsViewController(viewModel: viewModel)
-        settingsVC.modalPresentationStyle = .overFullScreen
-        settingsVC.doneButtonPressedDelegate = rootController
-        rootController.present(settingsVC, animated: true) {
+        
+        viewController.modalPresentationStyle = .overFullScreen
+        rootController.present(viewController, animated: true) {
         }
     }
-    
+    deinit {
+        print("Deinit: \(self)")
+    }
     
 }

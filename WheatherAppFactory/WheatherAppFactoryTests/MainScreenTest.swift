@@ -28,33 +28,48 @@ class MainScreenTest: QuickSpec {
                     let testBundle = Bundle(for: MainScreenTest.self)
                     guard let path = testBundle.url(forResource: "RequestJSON", withExtension: "json") else {return}
                     let dataFromLocation = try! Data(contentsOf: path)
-                    let weather = try! JSONDecoder().decode(MainDataClass.self, from: dataFromLocation)
+                    let weather = try! JSONDecoder().decode(MainDataModel.self, from: dataFromLocation)
                     
                     when(mock.alamofireRequest(any(), any())).thenReturn(Observable.just(weather))
-                    weatherData = weather
+                    
+                    
+                    var localDailyArray = [WeatherData]()
+                        for data in weather.daily.data {
+                            localDailyArray.append(WeatherData(time: data.time, temperatureMin: data.temperatureMin, temperatureMax: data.temperatureMax))
+                        }
+                    
+                    
+                    weatherData = MainDataClass(currently: Currently(humidity: weather.currently.humidity, icon: weather.currently.icon, pressure: weather.currently.pressure, temperature: weather.currently.temperature, time: weather.currently.time, windSpeed: weather.currently.windSpeed, summary: weather.currently.summary), daily: Daily(data: localDailyArray), timezone: weather.timezone)
                 }
             }
             context("Initialize viewModel"){
                 var dataReadySubject: TestableObserver<DataDoneEnum>!
                 beforeEach {
                     testScheduler = TestScheduler(initialClock: 0)
-                    mainViewModel = MainViewModel(scheduler: testScheduler, repository: mockedWeatherRepository)
-                    mainViewModel.getData(subject: mainViewModel.getDataSubject).disposed(by: disposeBag)
+                    mainViewModel = MainViewModel(dependencies: MainViewModel.Dependencies(scheduler: testScheduler, repository: mockedWeatherRepository))
+                    
+                    let input = MainViewModel.Input(getDataSubject: ReplaySubject<String>.create(bufferSize: 1), loadSettingSubject: ReplaySubject<Bool>.create(bufferSize: 1), firstLoadOfRealm: PublishSubject<Bool>(), getLocationSubject: PublishSubject<Bool>(), addLocationToRealmSubject: PublishSubject<Bool>(), setupCurrentLocationSubject: PublishSubject<Bool>())
+                    
+                    let output = mainViewModel.transform(input: input)
+                    
+                    for disposable in output.disposables{
+                        disposable.disposed(by: disposeBag)
+                    }
                     
                     dataReadySubject = testScheduler.createObserver(DataDoneEnum.self)
-                    
-                    mainViewModel.dataIsDoneLoading.subscribe(dataReadySubject).disposed(by: disposeBag)
+                    mainViewModel.input?.loadSettingSubject.onNext(true)
+                    mainViewModel.output!.dataIsDoneLoading.subscribe(dataReadySubject).disposed(by: disposeBag)
                 }
                 it("check if data is triggering the event on a subject"){
                     testScheduler.start()
-                    mainViewModel.getDataSubject.onNext("asd")
+                    mainViewModel.input!.getDataSubject.onNext("asd")
                     
                     expect(dataReadySubject.events.count).to(equal(2))
                     expect(dataReadySubject.events[0].value.element).to(equal(.dataNotReady))
                 }
                 it("Check if data is loaded into the viewModel"){
                     testScheduler.start()
-                    mainViewModel.getDataSubject.onNext("asd")
+                    mainViewModel.input!.getDataSubject.onNext("asd")
                     
                     expect(mainViewModel.mainWeatherData.currently.icon).toEventually(equal(weatherData.currently.icon))
                 }

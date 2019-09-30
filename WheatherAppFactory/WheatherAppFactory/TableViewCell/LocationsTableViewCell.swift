@@ -35,6 +35,13 @@ class LocationTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        setupUI()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    func setupUI(){
         contentView.addSubview(textImageView)
         contentView.addSubview(locationLabel)
         
@@ -46,20 +53,11 @@ class LocationTableViewCell: UITableViewCell {
             textImageView.heightAnchor.constraint(equalToConstant: 40),
             textImageView.widthAnchor.constraint(equalToConstant: 40),
             
-            
-//             locationLabel.topAnchor.constraint(equalTo: contentView.topAnchor),
-//            locationLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             locationLabel.centerYAnchor.constraint(equalTo: textImageView.centerYAnchor),
             locationLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             locationLabel.leadingAnchor.constraint(equalTo: textImageView.trailingAnchor, constant: 2)
             ])
-       
     }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     func setupCell(data: PostalCodes){
         locationLabel.text = data.name + ", " + data.countryCode
         textImageView.text = String(data.name.prefix(1).uppercased())

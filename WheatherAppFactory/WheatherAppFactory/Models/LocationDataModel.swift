@@ -2,19 +2,16 @@
 //  LocationDataClass.swift
 //  WheatherAppFactory
 //
-//  Created by Matej Hetzel on 30/09/2019.
+//  Created by Matej Hetzel on 12/09/2019.
 //  Copyright © 2019 Matej Hetzel. All rights reserved.
 //
 
 import Foundation
-class LocationDataClass {
-    let geonames: [PostalCodes]
-    init(geonames: [PostalCodes]) {
-        self.geonames = geonames
-    }
+class LocationDataModel: Decodable {
+    let geonames: [PostalCodesModel]
 }
 
-struct PostalCodes {
+struct PostalCodesModel: Decodable {
     let name: String
     let countryCode: String
     let lng: String

@@ -1,4 +1,4 @@
-// MARK: - Mocks generated from file: WheatherAppFactory/Manager/LocationRepository.swift at 2019-09-16 12:51:09 +0000
+// MARK: - Mocks generated from file: WheatherAppFactory/Manager/LocationRepository.swift at 2019-09-30 11:10:28 +0000
 
 //
 //  LocationRepository.swift
@@ -40,9 +40,9 @@ import RxSwift
     
     
     
-     override func alamofireRequest(_ location: String) -> Observable<LocationDataClass> {
+     override func alamofireRequest(_ location: String) -> Observable<LocationDataModel> {
         
-    return cuckoo_manager.call("alamofireRequest(_: String) -> Observable<LocationDataClass>",
+    return cuckoo_manager.call("alamofireRequest(_: String) -> Observable<LocationDataModel>",
             parameters: (location),
             escapingParameters: (location),
             superclassCall:
@@ -62,9 +62,9 @@ import RxSwift
 	    }
 	    
 	    
-	    func alamofireRequest<M1: Cuckoo.Matchable>(_ location: M1) -> Cuckoo.ClassStubFunction<(String), Observable<LocationDataClass>> where M1.MatchedType == String {
+	    func alamofireRequest<M1: Cuckoo.Matchable>(_ location: M1) -> Cuckoo.ClassStubFunction<(String), Observable<LocationDataModel>> where M1.MatchedType == String {
 	        let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: location) { $0 }]
-	        return .init(stub: cuckoo_manager.createStub(for: MockLocationRepository.self, method: "alamofireRequest(_: String) -> Observable<LocationDataClass>", parameterMatchers: matchers))
+	        return .init(stub: cuckoo_manager.createStub(for: MockLocationRepository.self, method: "alamofireRequest(_: String) -> Observable<LocationDataModel>", parameterMatchers: matchers))
 	    }
 	    
 	}
@@ -84,9 +84,9 @@ import RxSwift
 	
 	    
 	    @discardableResult
-	    func alamofireRequest<M1: Cuckoo.Matchable>(_ location: M1) -> Cuckoo.__DoNotUse<(String), Observable<LocationDataClass>> where M1.MatchedType == String {
+	    func alamofireRequest<M1: Cuckoo.Matchable>(_ location: M1) -> Cuckoo.__DoNotUse<(String), Observable<LocationDataModel>> where M1.MatchedType == String {
 	        let matchers: [Cuckoo.ParameterMatcher<(String)>] = [wrap(matchable: location) { $0 }]
-	        return cuckoo_manager.verify("alamofireRequest(_: String) -> Observable<LocationDataClass>", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+	        return cuckoo_manager.verify("alamofireRequest(_: String) -> Observable<LocationDataModel>", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
 	    }
 	    
 	}
@@ -98,14 +98,14 @@ import RxSwift
     
 
     
-     override func alamofireRequest(_ location: String) -> Observable<LocationDataClass>  {
-        return DefaultValueRegistry.defaultValue(for: (Observable<LocationDataClass>).self)
+     override func alamofireRequest(_ location: String) -> Observable<LocationDataModel>  {
+        return DefaultValueRegistry.defaultValue(for: (Observable<LocationDataModel>).self)
     }
     
 }
 
 
-// MARK: - Mocks generated from file: WheatherAppFactory/Manager/WeatherRepository.swift at 2019-09-16 12:51:09 +0000
+// MARK: - Mocks generated from file: WheatherAppFactory/Manager/WeatherRepository.swift at 2019-09-30 11:10:28 +0000
 
 //
 //  WeatherRepository.swift
@@ -147,9 +147,9 @@ import RxSwift
     
     
     
-     override func alamofireRequest(_ unit: String, _ location: String) -> Observable<MainDataClass> {
+     override func alamofireRequest(_ unit: String, _ location: String) -> Observable<MainDataModel> {
         
-    return cuckoo_manager.call("alamofireRequest(_: String, _: String) -> Observable<MainDataClass>",
+    return cuckoo_manager.call("alamofireRequest(_: String, _: String) -> Observable<MainDataModel>",
             parameters: (unit, location),
             escapingParameters: (unit, location),
             superclassCall:
@@ -169,9 +169,9 @@ import RxSwift
 	    }
 	    
 	    
-	    func alamofireRequest<M1: Cuckoo.Matchable, M2: Cuckoo.Matchable>(_ unit: M1, _ location: M2) -> Cuckoo.ClassStubFunction<(String, String), Observable<MainDataClass>> where M1.MatchedType == String, M2.MatchedType == String {
+	    func alamofireRequest<M1: Cuckoo.Matchable, M2: Cuckoo.Matchable>(_ unit: M1, _ location: M2) -> Cuckoo.ClassStubFunction<(String, String), Observable<MainDataModel>> where M1.MatchedType == String, M2.MatchedType == String {
 	        let matchers: [Cuckoo.ParameterMatcher<(String, String)>] = [wrap(matchable: unit) { $0.0 }, wrap(matchable: location) { $0.1 }]
-	        return .init(stub: cuckoo_manager.createStub(for: MockWeatherRepository.self, method: "alamofireRequest(_: String, _: String) -> Observable<MainDataClass>", parameterMatchers: matchers))
+	        return .init(stub: cuckoo_manager.createStub(for: MockWeatherRepository.self, method: "alamofireRequest(_: String, _: String) -> Observable<MainDataModel>", parameterMatchers: matchers))
 	    }
 	    
 	}
@@ -191,9 +191,9 @@ import RxSwift
 	
 	    
 	    @discardableResult
-	    func alamofireRequest<M1: Cuckoo.Matchable, M2: Cuckoo.Matchable>(_ unit: M1, _ location: M2) -> Cuckoo.__DoNotUse<(String, String), Observable<MainDataClass>> where M1.MatchedType == String, M2.MatchedType == String {
+	    func alamofireRequest<M1: Cuckoo.Matchable, M2: Cuckoo.Matchable>(_ unit: M1, _ location: M2) -> Cuckoo.__DoNotUse<(String, String), Observable<MainDataModel>> where M1.MatchedType == String, M2.MatchedType == String {
 	        let matchers: [Cuckoo.ParameterMatcher<(String, String)>] = [wrap(matchable: unit) { $0.0 }, wrap(matchable: location) { $0.1 }]
-	        return cuckoo_manager.verify("alamofireRequest(_: String, _: String) -> Observable<MainDataClass>", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
+	        return cuckoo_manager.verify("alamofireRequest(_: String, _: String) -> Observable<MainDataModel>", callMatcher: callMatcher, parameterMatchers: matchers, sourceLocation: sourceLocation)
 	    }
 	    
 	}
@@ -205,8 +205,8 @@ import RxSwift
     
 
     
-     override func alamofireRequest(_ unit: String, _ location: String) -> Observable<MainDataClass>  {
-        return DefaultValueRegistry.defaultValue(for: (Observable<MainDataClass>).self)
+     override func alamofireRequest(_ unit: String, _ location: String) -> Observable<MainDataModel>  {
+        return DefaultValueRegistry.defaultValue(for: (Observable<MainDataModel>).self)
     }
     
 }

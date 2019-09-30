@@ -14,7 +14,7 @@ import RxCocoa
 
 
 class AlamofireManager {
-    func requestData(url: String) -> Observable<MainDataClass> {
+    func requestData(url: String) -> Observable<MainDataModel> {
         let requestUrl = URL(string: url)!
         
         return Observable.create{   observable -> Disposable in
@@ -23,7 +23,7 @@ class AlamofireManager {
                     .responseJSON   { response in
                 do {
                     guard let data = response.data else {return}
-                    let article = try JSONDecoder().decode(MainDataClass.self, from: data)
+                    let article = try JSONDecoder().decode(MainDataModel.self, from: data)
                     observable.onNext(article)
                 }   catch let jsonErr {
                     observable.onError(jsonErr)
@@ -34,7 +34,7 @@ class AlamofireManager {
         }
     }
     
-    func requestLocation(url: String) -> Observable<LocationDataClass> {
+    func requestLocation(url: String) -> Observable<LocationDataModel> {
       
         return Observable.create{   observable -> Disposable in
             let escapedString = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
@@ -44,7 +44,7 @@ class AlamofireManager {
                 .responseJSON   { response in
                     do {
                         guard let data = response.data else {return}
-                        let article = try JSONDecoder().decode(LocationDataClass.self, from: data)
+                        let article = try JSONDecoder().decode(LocationDataModel.self, from: data)
                         observable.onNext(article)
                     }   catch let jsonErr {
                         observable.onError(jsonErr)

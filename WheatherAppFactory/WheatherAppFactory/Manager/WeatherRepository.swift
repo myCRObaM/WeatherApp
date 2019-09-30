@@ -12,7 +12,7 @@ import RxSwift
 class WeatherRepository {
     let url = "https://api.darksky.net/forecast/eed19b0a0b89a80e38d4ae15b1f24130/"
     
-    func alamofireRequest(_ unit: String, _ location: String) -> Observable<MainDataClass> {
+    func alamofireRequest(_ unit: String, _ location: String) -> Observable<MainDataModel> {
         let alamofireManager = AlamofireManager()
         let currentURL = url + location + "?units=" + unit
         print(currentURL)

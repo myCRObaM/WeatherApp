@@ -7,10 +7,10 @@
 //
 
 import Foundation
-protocol DoneButtonIsPressedDelegate {
+protocol DoneButtonIsPressedDelegate: class {
     func close(settings: SettingsScreenObject, location: LocationsObject)
 }
 
-protocol SettingsScreenDelegate {
+protocol SettingsScreenDelegate: class {
     func buttonPressed(rootController: MainViewController)
 }

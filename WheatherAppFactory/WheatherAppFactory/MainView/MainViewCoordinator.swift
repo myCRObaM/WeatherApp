@@ -22,7 +22,7 @@ class MainViewCoordinator: Coordinator {
     }
     
     func start() {
-        let mainViewModel = MainViewModel(scheduler: ConcurrentDispatchQueueScheduler(qos: .background), repository: WeatherRepository())
+        let mainViewModel = MainViewModel(dependencies: MainViewModel.Dependencies(scheduler: ConcurrentDispatchQueueScheduler(qos: .background), repository: WeatherRepository()))
         let mainViewController = MainViewController(viewModel: mainViewModel)
         mainViewController.openSearchScreenDelegate = self
         mainViewController.openSettingScreenDelegate = self
@@ -30,9 +30,24 @@ class MainViewCoordinator: Coordinator {
         window?.makeKeyAndVisible()
     }
 }
+
+extension MainViewCoordinator: ParentCoordinatorDelegate, CoordinatorDelegate {
+    
+    func childHasFinished(coordinator: Coordinator) {
+        removeCoordinator(coordinator: coordinator)
+    }
+    
+    func viewControllerHasFinished() {
+        childCoordinators.removeAll()
+        childHasFinished(coordinator: self)
+    }
+    
+    
+}
 extension MainViewCoordinator: SearchScreenDelegate{
     func openSearchScreen(searchBar: UISearchBar, rootController: MainViewController) {
         let searchCoordinator = SearchViewCoordinator(rootController: rootController, searchBar: searchBar)
+        searchCoordinator.viewController.coordinatorDelegate = self
         self.addCoordinator(coordinator: searchCoordinator)
         searchCoordinator.start()
     }
@@ -41,6 +56,7 @@ extension MainViewCoordinator: SearchScreenDelegate{
 extension MainViewCoordinator: SettingsScreenDelegate{
     func buttonPressed(rootController: MainViewController) {
         let settingsCoordinator = SettingsViewCoordinator(rootController: rootController)
+        settingsCoordinator.viewController.coordinatorDelegate = self
         self.addCoordinator(coordinator: settingsCoordinator)
         settingsCoordinator.start()
     }

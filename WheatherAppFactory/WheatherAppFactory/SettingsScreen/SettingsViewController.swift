@@ -13,7 +13,7 @@ import RxSwift
 
 
 class SettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    
+    //MARK: Table view
     let tableView: UITableView = {
         let view = UITableView()
         view.separatorStyle = .none
@@ -48,25 +48,33 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     
-    
+    //MARK: variable
     let viewModel: SettingsScreenModel!
-    var doneButtonPressedDelegate: DoneButtonIsPressedDelegate!
+    weak var doneButtonPressedDelegate: DoneButtonIsPressedDelegate?
+    weak var coordinatorDelegate: CoordinatorDelegate?
     let disposeBag = DisposeBag()
     var customView: SettingsView!
     
-    
+    //MARK: init
     init(viewModel: SettingsScreenModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
-    
+    override func viewWillDisappear(_ animated: Bool) {
+        coordinatorDelegate?.viewControllerHasFinished()
+        print("Deinit: \(self)")
+    }
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        setupUI()
+    }
+
+    //MARK: SetupUI
+    func setupUI(){
         print(Realm.Configuration.defaultConfiguration.fileURL!)
         customView = SettingsView(frame: view.frame, tableView: tableView)
         customView.translatesAutoresizingMaskIntoConstraints = false
@@ -81,16 +89,13 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         
         view.addSubview(customView)
         
-        viewModel.updateRealmSettingsObject(subject: viewModel.getDataSubject).disposed(by: disposeBag)
-        viewModel.loadLocationsFromRealm(subject: viewModel!.getLocationsDataSubject).disposed(by: disposeBag)
-        reloadTableView(subject: viewModel.dataIsDoneSubject).disposed(by: disposeBag)
-        viewModel.getLocationsDataSubject.onNext(true)
-        viewModel.deleteObjectFromRealm(subject: viewModel.removeLocationSubject).disposed(by: disposeBag)
         
-        dataIsLoaded()
+        setupViewModel()
         setupButtons()
         setupConstraints()
+        dataIsLoaded()
     }
+    
     func setupConstraints(){
         NSLayoutConstraint.activate([
             customView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -99,7 +104,29 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             customView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
             ])
     }
-    
+    //MARK: Setup view model
+    func setupViewModel(){
+        let input = SettingsScreenModel.Input(getDataSubject: ReplaySubject<Bool>.create(bufferSize: 1), getLocationsDataSubject: ReplaySubject<Bool>.create(bufferSize: 1), removeLocationSubject: PublishSubject<String>())
+        
+        let output = viewModel.transform(input: input)
+        
+        for disposable in output.disposables {
+            disposable.disposed(by: disposeBag)
+        }
+        
+        viewModel.output!.popUpSubject
+        .observeOn(MainScheduler.instance)
+        .subscribeOn(viewModel.dependencies.scheduler)
+        .subscribe(onNext: {[unowned self] bool in
+                self.showPopUp()
+            }).disposed(by: disposeBag)
+        
+        
+        viewModel.input!.getLocationsDataSubject.onNext(true)
+        
+        reloadTableView(subject: viewModel.output!.dataIsDoneSubject).disposed(by: disposeBag)
+    }
+    //MARK: Setup buttons
     func setupButtons(){
         customView.humidityButton.addTarget(self, action: #selector(humidityButtonIsPressed), for: .touchUpInside)
         customView.metricButton.addTarget(self, action: #selector(metricButtonIsPressed), for: .touchUpInside)
@@ -107,7 +134,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         customView.pressureButton.addTarget(self, action: #selector(pressureButtonIsPressed), for: .touchUpInside)
         customView.windButton.addTarget(self, action: #selector(windButtonIsPressed), for: .touchUpInside)
     }
-    
+    //MARK: Button actions
     @objc func humidityButtonIsPressed(){
         customView.humidityButton.isSelected = !customView.humidityButton.isSelected
         viewModel.settingsObjects.humidityIsSelected = customView.humidityButton.isSelected
@@ -130,47 +157,52 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         viewModel.settingsObjects.windIsSelected = customView.windButton.isSelected
         dataIsLoaded()
     }
-    
+    //MARK: Setup view
     func dataIsLoaded(){
-        if viewModel.settingsObjects.humidityIsSelected {
-            customView.humidityButton.isSelected = true
-        }
-        if viewModel.settingsObjects.pressureIsSelected {
-            customView.pressureButton.isSelected = true
-        }
-        if viewModel.settingsObjects.windIsSelected {
-            customView.windButton.isSelected = true
-        }
-        if viewModel.settingsObjects.metricSelected {
-            customView.metricButton.isSelected = true
-        }
-        else {
-            customView.imperialButton.isSelected = true
-        }
+        customView.humidityButton.isSelected = viewModel.settingsObjects.humidityIsSelected
+        customView.pressureButton.isSelected = viewModel.settingsObjects.pressureIsSelected
+        customView.windButton.isSelected = viewModel.settingsObjects.windIsSelected
+        customView.metricButton.isSelected = viewModel.settingsObjects.metricSelected
+        customView.imperialButton.isSelected = !viewModel.settingsObjects.metricSelected
     }
     
+    //MARK: Done button pressed
     @objc func donePressed(){
         self.dismiss(animated: false, completion: nil)
-        viewModel.getDataSubject.onNext(true)
-        doneButtonPressedDelegate.close(settings: viewModel.settingsObjects, location: viewModel.currentLocation)
+        viewModel.input!.getDataSubject.onNext(true)
+        doneButtonPressedDelegate!.close(settings: viewModel.settingsObjects, location: viewModel.currentLocation)
     }
     
+    //MARK: ReloadTableView
     func reloadTableView(subject: PublishSubject<CellControllEnum>) -> Disposable {
         return subject
             .observeOn(MainScheduler.instance)
-            .subscribeOn(viewModel.scheduler)
+            .subscribeOn(viewModel.dependencies.scheduler)
             .subscribe(onNext: {[unowned self]  bool in
                 switch bool {
-                case let .add(index):
-                    self.customView.tableView.insertRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
+                case .add(_):
+                    self.tableView.reloadData()
+                    self.dataIsLoaded()
                 case let .remove(index):
                     self.customView.tableView.deleteRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
                 }
+            },  onError: {[unowned self] (error) in
+                self.viewModel.output!.popUpSubject.onNext(true)
+                    print(error)
             })
     }
+    //MARK: Popup
+    func showPopUp(){
+          let alert = UIAlertController(title: "Error", message: "Something went wrong.", preferredStyle: .alert)
+          alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action: UIAlertAction) in
+              alert.dismiss(animated: true, completion: nil)
+          }))
+          self.present(alert, animated: true)
+      }
 }
+
 extension SettingsViewController: DeleteButtonIsPressed {
     func deletePressed(name: String) {
-        viewModel.removeLocationSubject.onNext(name)
+        viewModel.input!.removeLocationSubject.onNext(name)
     }
 }

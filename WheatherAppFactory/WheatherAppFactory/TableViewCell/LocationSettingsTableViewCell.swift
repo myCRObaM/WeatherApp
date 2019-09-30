@@ -38,6 +38,9 @@ class LocationSettingsTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        setupUI()
+    }
+    func setupUI(){
         contentView.addSubview(deleteLocation)
         contentView.addSubview(locationLabel)
         deleteLocation.addTarget(self, action: #selector(deletePressed), for: .touchUpInside)
