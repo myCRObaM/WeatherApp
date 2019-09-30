@@ -52,9 +52,7 @@ class LocationSettingsTableViewCell: UITableViewCell {
             deleteLocation.heightAnchor.constraint(equalToConstant: 40),
             deleteLocation.widthAnchor.constraint(equalToConstant: 40),
             
-            
-            //             locationLabel.topAnchor.constraint(equalTo: contentView.topAnchor),
-            //            locationLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+
             locationLabel.centerYAnchor.constraint(equalTo: deleteLocation.centerYAnchor),
             locationLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             locationLabel.leadingAnchor.constraint(equalTo: deleteLocation.trailingAnchor, constant: 2)

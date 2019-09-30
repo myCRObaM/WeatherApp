@@ -310,7 +310,6 @@ class MainView: UIView    {
         NSLayoutConstraint.activate([
             topTempStackView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             topTempStackView.topAnchor.constraint(equalTo: self.topAnchor, constant: self.bounds.height/7),
-            //topTempStackView.heightAnchor.constraint(equalToConstant: self.bounds.height/9)
             ])
         
         NSLayoutConstraint.activate([
