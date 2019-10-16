@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import SnapKit
 
 class MainView: UIView    {
     
@@ -307,53 +308,46 @@ class MainView: UIView    {
         setupConstraints()
     }
     func setupConstraints(){
-        NSLayoutConstraint.activate([
-            topTempStackView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            topTempStackView.topAnchor.constraint(equalTo: self.topAnchor, constant: self.bounds.height/7),
-            ])
         
-        NSLayoutConstraint.activate([
-            mainBodyImage.topAnchor.constraint(equalTo: topTempStackView.bottomAnchor, constant: self.bounds.height/15),
-            mainBodyImage.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            mainBodyImage.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-            mainBodyImage.trailingAnchor.constraint(equalTo: self.trailingAnchor)
-            ])
+        topTempStackView.snp.makeConstraints { (make) in
+            make.centerX.equalTo(self)
+            make.top.equalTo(self).offset(self.bounds.height/7)
+        }
         
-        NSLayoutConstraint.activate([
-            gradientView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            gradientView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            gradientView.bottomAnchor.constraint(equalTo: mainBodyImage.topAnchor, constant: self.bounds.height/5),
-            gradientView.topAnchor.constraint(equalTo: self.topAnchor),
-            ])
-        NSLayoutConstraint.activate([
-            headerImage.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            headerImage.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            headerImage.bottomAnchor.constraint(equalTo: mainBodyImage.topAnchor),
-            headerImage.topAnchor.constraint(equalTo: self.topAnchor, constant: self.bounds.height/25),
-            ])
+        mainBodyImage.snp.makeConstraints { (make) in
+            make.top.equalTo(topTempStackView.snp.bottom).offset(self.bounds.height/15)
+            make.leading.bottom.trailing.equalTo(self)
+        }
         
-        NSLayoutConstraint.activate([
-            location.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            
-            location.topAnchor.constraint(equalTo: topTempStackView.bottomAnchor, constant: self.bounds.height/7)
-            ,
-            ])
+        gradientView.snp.makeConstraints { (make) in
+            make.leading.top.trailing.equalTo(self)
+            make.bottom.equalTo(mainBodyImage.snp.top).offset(self.bounds.height/5)
+        }
         
-        NSLayoutConstraint.activate([
-            highAndLowTempStackView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            highAndLowTempStackView.topAnchor.constraint(equalTo: location.bottomAnchor, constant: self.bounds.height/18),
-            ])
+        headerImage.snp.makeConstraints { (make) in
+            make.leading.trailing.equalTo(self)
+            make.bottom.equalTo(mainBodyImage.snp.top)
+            make.top.equalTo(self).offset(self.bounds.height/25)
+        }
         
-        NSLayoutConstraint.activate([
-            moreInfoStackView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            moreInfoStackView.topAnchor.constraint(equalTo: highAndLowTempStackView.bottomAnchor, constant: self.bounds.height/13),
-            ])
+        location.snp.makeConstraints { (make) in
+            make.centerX.equalTo(self)
+            make.top.equalTo(topTempStackView.snp.bottom).offset(self.bounds.height/7)
+        }
         
+        highAndLowTempStackView.snp.makeConstraints { (make) in
+            make.centerX.equalTo(self)
+            make.top.equalTo(location.snp.bottom).offset(self.bounds.height/18)
+        }
         
+        moreInfoStackView.snp.makeConstraints { (make) in
+            make.centerX.equalTo(self)
+            make.top.equalTo(highAndLowTempStackView.snp.bottom).offset(self.bounds.height/13)
+        }
         
-        NSLayoutConstraint.activate([
-            settingsImage.topAnchor.constraint(equalTo: moreInfoStackView.bottomAnchor, constant: self.bounds.height/11),
-            settingsImage.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10),
-            ])
+        settingsImage.snp.makeConstraints { (make) in
+            make.top.equalTo(moreInfoStackView.snp.bottom).offset(self.bounds.height/11)
+            make.leading.equalTo(self).offset(10)
+        }
     }
 }

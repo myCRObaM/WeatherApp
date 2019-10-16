@@ -45,19 +45,21 @@ class LocationSettingsTableViewCell: UITableViewCell {
         contentView.addSubview(locationLabel)
         deleteLocation.addTarget(self, action: #selector(deletePressed), for: .touchUpInside)
         
-        NSLayoutConstraint.activate([
-            deleteLocation.topAnchor.constraint(equalTo: contentView.topAnchor),
-            deleteLocation.bottomAnchor.constraint(equalTo: contentView.bottomAnchor,constant: -5),
-            deleteLocation.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            deleteLocation.heightAnchor.constraint(equalToConstant: 40),
-            deleteLocation.widthAnchor.constraint(equalToConstant: 40),
-            
-
-            locationLabel.centerYAnchor.constraint(equalTo: deleteLocation.centerYAnchor),
-            locationLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            locationLabel.leadingAnchor.constraint(equalTo: deleteLocation.trailingAnchor, constant: 2)
-            ])
+        setupConstraints()
+    }
+    
+    func setupConstraints(){
+        deleteLocation.snp.makeConstraints { (make) in
+            make.top.leading.equalTo(contentView)
+            make.bottom.equalTo(contentView).offset(-5)
+            make.height.width.equalTo(40)
+        }
         
+        locationLabel.snp.makeConstraints { (make) in
+            make.centerY.equalTo(deleteLocation)
+            make.trailing.equalTo(contentView)
+            make.leading.equalTo(deleteLocation.snp.trailing).offset(2)
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {

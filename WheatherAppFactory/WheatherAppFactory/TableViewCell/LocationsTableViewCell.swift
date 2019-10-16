@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SnapKit
 import UIKit
 
 class LocationTableViewCell: UITableViewCell {
@@ -45,18 +46,21 @@ class LocationTableViewCell: UITableViewCell {
         contentView.addSubview(textImageView)
         contentView.addSubview(locationLabel)
         
+        setupConstraints()
         
-        NSLayoutConstraint.activate([
-            textImageView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            textImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor,constant: -5),
-            textImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            textImageView.heightAnchor.constraint(equalToConstant: 40),
-            textImageView.widthAnchor.constraint(equalToConstant: 40),
-            
-            locationLabel.centerYAnchor.constraint(equalTo: textImageView.centerYAnchor),
-            locationLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            locationLabel.leadingAnchor.constraint(equalTo: textImageView.trailingAnchor, constant: 2)
-            ])
+    }
+    func setupConstraints(){
+        textImageView.snp.makeConstraints { (make) in
+            make.top.leading.equalTo(contentView)
+            make.bottom.equalTo(contentView).offset(-5)
+            make.height.width.equalTo(40)
+        }
+        
+        locationLabel.snp.makeConstraints { (make) in
+            make.centerY.equalTo(textImageView)
+            make.trailing.equalTo(contentView)
+            make.leading.equalTo(textImageView).offset(2)
+        }
     }
     func setupCell(data: PostalCodes){
         locationLabel.text = data.name + ", " + data.countryCode

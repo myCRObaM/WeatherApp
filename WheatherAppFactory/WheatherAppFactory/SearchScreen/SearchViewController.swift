@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import RxSwift
+import SnapKit
 
 protocol hideViewController{
     func didLoadData()
@@ -20,7 +21,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
     let searchBar: UISearchBar!
     weak var cancelButtonPressed: hideKeyboard!
     var keyboardHeight: CGFloat!
-    var bottomConstraint: NSLayoutConstraint?
+    var bottomConstraint: Constraint?
     let disposeBag = DisposeBag()
     weak var selectedLocationButton: ChangeLocationBasedOnSelection?
     weak var coordinatorDelegate: CoordinatorDelegate?
@@ -142,31 +143,29 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
         
         
     }
+    //MARK: Constraints
     func setupConstraints(){
-        NSLayoutConstraint.activate([
-            blurryBackground.topAnchor.constraint(equalTo: view.topAnchor),
-            blurryBackground.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            blurryBackground.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            blurryBackground.trailingAnchor.constraint(equalTo: view.trailingAnchor)
-            ])
-        bottomConstraint = NSLayoutConstraint(item: searchBar!, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: -60)
+
+        tableView.snp.makeConstraints { (make) in
+            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.leading.trailing.equalTo(view)
+            make.bottom.equalTo(searchBar.snp.top).offset(-20)
+        }
         
-        NSLayoutConstraint.activate([
-            searchBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            searchBar.trailingAnchor.constraint(equalTo: view.trailingAnchor)
-            ])
-        view.addConstraint(bottomConstraint!)
+        cancelButton.snp.makeConstraints { (make) in
+            make.top.equalTo(tableView).offset(view.bounds.width/25)
+            make.trailing.equalTo(tableView).offset(-view.bounds.width/25)
+        }
         
-        NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: searchBar.topAnchor, constant: -20)
-            ])
-        NSLayoutConstraint.activate([
-            cancelButton.topAnchor.constraint(equalTo: tableView.topAnchor, constant: view.bounds.width/25),
-            cancelButton.trailingAnchor.constraint(equalTo: tableView.trailingAnchor, constant: -view.bounds.width/25)
-            ])
+        blurryBackground.snp.makeConstraints { (make) in
+            make.edges.equalTo(view)
+        }
+        
+        searchBar.snp.makeConstraints { [unowned self] (make) in
+            self.bottomConstraint = make.top.equalTo(view.snp.bottom).offset(-60).constraint
+            make.leading.trailing.equalTo(view)
+        }
+        
         
     }
     //MARK: Prepare for view model
@@ -205,10 +204,10 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
     @objc func keyboardWillShow(notification: NSNotification){
         UIView.setAnimationsEnabled(true)
         if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
-            keyboardHeight = keyboardFrame.cgRectValue.height
-            
             let isKeyboardShown = notification.name == UIResponder.keyboardWillShowNotification
-            self.bottomConstraint?.constant = isKeyboardShown ? -self.keyboardHeight : -60
+            keyboardHeight = -viewModel.getKeyboardHeight(isKeyboardShown, keyboardFrame)
+            
+            self.bottomConstraint?.update(offset: self.keyboardHeight)
             
             UIView.animate(withDuration: 1) {
                 self.view.layoutIfNeeded()

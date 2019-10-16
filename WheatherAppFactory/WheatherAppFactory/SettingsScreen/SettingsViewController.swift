@@ -97,12 +97,9 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func setupConstraints(){
-        NSLayoutConstraint.activate([
-            customView.topAnchor.constraint(equalTo: view.topAnchor),
-            customView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            customView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            customView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
-            ])
+        customView.snp.makeConstraints { (make) in
+            make.edges.equalTo(view)
+        }
     }
     //MARK: Setup view model
     func setupViewModel(){

@@ -10,6 +10,7 @@ import UIKit
 import RxSwift
 import Hue
 import MapKit
+import SnapKit
 
 class MainViewController: UIViewController, UISearchBarDelegate{
     
@@ -17,7 +18,7 @@ class MainViewController: UIViewController, UISearchBarDelegate{
     let disposeBag = DisposeBag()
     var customView: MainView!
     
-    var searchBarCenterY: NSLayoutConstraint!
+    var searchBarCenterY: Constraint?
     weak var openSearchScreenDelegate: SearchScreenDelegate?
     weak var openSettingScreenDelegate: SettingsScreenDelegate?
     var vSpinner : UIView?
@@ -77,24 +78,21 @@ class MainViewController: UIViewController, UISearchBarDelegate{
     
     func setupConstraints() {
         
-        NSLayoutConstraint.activate([
-            customView.topAnchor.constraint(equalTo: view.topAnchor),
-            customView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            customView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            customView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
-            ])
+        customView.snp.makeConstraints { (make) in
+            make.edges.equalTo(view)
+        }
         setupSearchBarConstraints()
     }
     
     func setupSearchBarConstraints(){
         customView.searchBar.delegate = self
-        searchBarCenterY = NSLayoutConstraint(item: customView.searchBar, attribute: .centerY, relatedBy: .equal, toItem: customView.settingsImage, attribute: .centerY, multiplier: 1, constant: 0)
-        NSLayoutConstraint.activate([
-            customView.searchBar.heightAnchor.constraint(equalToConstant: 70),
-            customView.searchBar.leadingAnchor.constraint(equalTo: customView.settingsImage.trailingAnchor, constant: 10),
-            customView.searchBar.trailingAnchor.constraint(equalTo: customView.trailingAnchor, constant: -10)
-            ])
-        view.addConstraint(searchBarCenterY)
+        
+        customView.searchBar.snp.makeConstraints { (make) in
+            searchBarCenterY = make.centerY.equalTo(customView.settingsImage.snp.centerY).constraint
+            make.height.equalTo(70)
+            make.leading.equalTo(customView.settingsImage.snp.trailing).offset(10)
+            make.trailing.equalTo(customView.snp.trailing).offset(-10)
+        }
         
     }
     

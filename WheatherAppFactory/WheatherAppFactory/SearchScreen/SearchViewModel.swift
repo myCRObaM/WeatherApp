@@ -78,4 +78,14 @@ class SearchViewModel {
                     print(error)
             })
     }
+    
+    //MARK: return Keyboard height
+    func getKeyboardHeight(_ bool: Bool,_ frame: NSValue) -> CGFloat {
+        if bool {
+            return frame.cgRectValue.height + 60
+        }
+        else {
+            return 60
+        }
+    }
 }

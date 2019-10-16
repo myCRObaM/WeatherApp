@@ -7,11 +7,12 @@
 //
 
 import Foundation
+import SnapKit
 import UIKit
 
 class SettingsView: UIView {
     
-    
+    //MARK: Views
     @IBDesignable class PaddingLabel: UILabel {
         @IBInspectable var topInset: CGFloat = 10.0
         @IBInspectable var bottomInset: CGFloat = 5.0
@@ -221,8 +222,8 @@ class SettingsView: UIView {
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
-    
     let tableView: UITableView!
+    //MARK: Init
     
     init(frame: CGRect, tableView: UITableView) {
         self.tableView = tableView
@@ -233,7 +234,7 @@ class SettingsView: UIView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+    //MARK: SetupView
     func setupView(){
         
         humidityStack.addArrangedSubview(humidityImage)
@@ -271,54 +272,46 @@ class SettingsView: UIView {
         
         setupConstraints()
     }
-    
+    //MARK: Constraints
     func setupConstraints(){
+        settingsView.snp.makeConstraints { (make) in
+            make.edges.equalTo(self)
+        }
         
-        NSLayoutConstraint.activate([
-            settingsView.topAnchor.constraint(equalTo: self.topAnchor),
-            settingsView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-            settingsView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            settingsView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
-            ])
+        doneButton.snp.makeConstraints { (make) in
+            make.bottom.equalTo(self).offset(-self.bounds.height/25)
+            make.trailing.equalTo(self).offset(-self.bounds.height/25)
+        }
+        locationLabel.snp.makeConstraints { (make) in
+            make.top.equalTo(self.safeAreaLayoutGuide.snp.top).offset(self.bounds.height/22)
+            make.centerX.equalTo(self)
+        }
         
-        NSLayoutConstraint.activate([
-            doneButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -self.bounds.height/25),
-            doneButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -self.bounds.height/25)
-            ])
+        tableView.snp.makeConstraints { (make) in
+            make.top.equalTo(locationLabel.snp.bottom).offset(self.bounds.height/30)
+            make.leading.trailing.equalTo(self)
+            make.height.equalTo(self.bounds.height/6)
+        }
         
-        NSLayoutConstraint.activate([
-            locationLabel.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: self.bounds.height/22),
-            locationLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor)
-            ])
+        unitsLabel.snp.makeConstraints { (make) in
+            make.top.equalTo(tableView.snp.bottom).offset(self.bounds.height/31)
+            make.centerX.equalTo(self)
+        }
         
-        NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: locationLabel.bottomAnchor, constant: self.bounds.height/30),
-            tableView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            tableView.heightAnchor.constraint(equalToConstant: self.bounds.height/6)
-            ])
+        unitsStackView.snp.makeConstraints { (make) in
+            make.top.equalTo(unitsLabel.snp.bottom).offset(self.bounds.height/31)
+            make.leading.equalTo(self).offset(self.bounds.width/30)
+            make.trailing.equalTo(self).offset(-self.bounds.width/30)
+        }
         
-        NSLayoutConstraint.activate([
-            unitsLabel.topAnchor.constraint(equalTo: tableView.bottomAnchor, constant: self.bounds.height/31),
-            unitsLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor)
-            ])
+        conditionsLabel.snp.makeConstraints { (make) in
+            make.top.equalTo(unitsStackView.snp.bottom).offset(self.bounds.height/30)
+            make.centerX.equalTo(self)
+        }
         
-        NSLayoutConstraint.activate([
-            unitsStackView.topAnchor.constraint(equalTo: unitsLabel.bottomAnchor, constant: self.bounds.height/31),
-            unitsStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: self.bounds.width/30),
-            unitsStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -self.bounds.width/30)
-            ])
-        
-        NSLayoutConstraint.activate([
-            conditionsLabel.topAnchor.constraint(equalTo: unitsStackView.bottomAnchor, constant: self.bounds.height/30),
-            conditionsLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor)
-            ])
-        
-        NSLayoutConstraint.activate([
-            allConditionsStackView.topAnchor.constraint(equalTo: conditionsLabel.bottomAnchor, constant: self.bounds.height/30),
-            allConditionsStackView.centerXAnchor.constraint(equalTo: self.centerXAnchor)
-            ])
-        
-        
+        allConditionsStackView.snp.makeConstraints { (make) in
+            make.top.equalTo(conditionsLabel.snp.bottom).offset(self.bounds.height/30)
+            make.centerX.equalTo(self)
+        }
     }
 }
