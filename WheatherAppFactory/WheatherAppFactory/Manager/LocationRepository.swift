@@ -17,6 +17,6 @@ class LocationRepository {
     func alamofireRequest(_ location: String) -> Observable<LocationDataModel> {
         let alamofireManager = AlamofireManager()
         let currentURL = turl + location + username
-        return alamofireManager.requestLocation(url: currentURL)
+        return alamofireManager.requestData(url: currentURL)
     }
 }

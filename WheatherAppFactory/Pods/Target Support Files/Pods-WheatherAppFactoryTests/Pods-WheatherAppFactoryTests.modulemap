@@ -1,6 +1,0 @@
-framework module Pods_WheatherAppFactoryTests {
-  umbrella header "Pods-WheatherAppFactoryTests-umbrella.h"
-
-  export *
-  module * { export * }
-}
